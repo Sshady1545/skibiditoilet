@@ -8,9 +8,9 @@
 }
 
 :root {
-    /* KIRMIZILAR GİTTİ -> SARI VE GRİ GELDİ */
-    --primary-yellow: #FFFF00;
-    --primary-yellow-dark: #cccc00;
+    /* KIRMIZILAR SARIYA DÖNÜŞTÜ */
+    --primary-red: #ffcc00; /* Canlı Sarı */
+    --primary-red-dark: #ccaa00; /* Koyu Altın/Sarı */
     --bg-black: #000000;
     --bg-dark: #0a0a0a;
     --bg-card: #0f0f0f;
@@ -18,9 +18,8 @@
     --text-gray: #888888;
     --text-light: #cccccc;
     --border-subtle: rgba(255, 255, 255, 0.05);
-    /* GÖLGELER ARTIK SARI/BEYAZ */
-    --glow-yellow: rgba(255, 255, 0, 0.2);
-    --glow-yellow-strong: rgba(255, 255, 0, 0.4);
+    --glow-red: rgba(255, 204, 0, 0.4); /* Sarı Parlama */
+    --glow-red-strong: rgba(255, 204, 0, 0.7);
 }
 
 body {
@@ -37,7 +36,7 @@ body {
 }
 
 /* ========================================
-   ANIMATED BACKGROUND (Kırmızı Efektler Silindi)
+   ANIMATED BACKGROUND
    ======================================== */
 .particles-bg {
     position: fixed;
@@ -48,8 +47,15 @@ body {
     z-index: 0;
     pointer-events: none;
     background: 
-        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.02) 0%, transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.02) 0%, transparent 40%);
+        radial-gradient(circle at 20% 30%, rgba(255, 204, 0, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(255, 204, 0, 0.02) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(255, 204, 0, 0.01) 0%, transparent 50%);
+    animation: bgPulse 8s ease-in-out infinite;
+}
+
+@keyframes bgPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
 }
 
 /* ========================================
@@ -63,15 +69,67 @@ body {
     height: 85px;
     background: rgba(10, 10, 10, 0.95);
     backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 2px solid var(--primary-yellow); /* Navigasyon altı sarı */
+    border-bottom: 2px solid var(--border-subtle);
     z-index: 1000;
     display: flex;
     justify-content: center;
     align-items: center;
+    animation: slideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-glow {
-    display: none; /* Kırmızı parlama bandı silindi */
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--primary-red) 50%, 
+        transparent 100%);
+    opacity: 0;
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.8; }
+}
+
+.nav-content {
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo-glow {
+    position: relative;
+    animation: float 3s ease-in-out infinite;
+}
+
+.nav-logo-img {
+    height: 55px;
+    filter: drop-shadow(0 0 15px var(--glow-red));
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.logo-glow:hover .nav-logo-img {
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 0 25px var(--glow-red-strong));
+}
+
+.nav-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
 .nav-title {
@@ -79,7 +137,91 @@ body {
     font-weight: 900;
     font-size: 1.4rem;
     letter-spacing: 3px;
-    color: var(--primary-yellow); /* Başlık sarı */
+    background: linear-gradient(135deg, #ffcc00 0%, #fff0b3 100%); /* Altın degrade */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-subtitle {
+    font-size: 0.7rem;
+    color: var(--text-gray);
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.online-status {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 12px 24px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border: 1px solid var(--border-subtle);
+    transition: all 0.3s ease;
+}
+
+.online-status:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--primary-red);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    background: #00ff00;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #00ff00;
+}
+
+/* Offline durumu sarıya daha uyumlu bir turuncu-kırmızı yapıldı */
+.status-dot.offline {
+    background: #ff4400;
+    box-shadow: 0 0 15px #ff4400;
+}
+
+.pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.3);
+    }
+}
+
+.status-text {
+    letter-spacing: 1px;
+}
+
+.player-number {
+    color: var(--primary-red);
+    font-weight: 900;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* ========================================
+   MAIN GRID LAYOUT
+   ======================================== */
+.main-container {
+    display: grid;
+    grid-template-columns: 340px 440px 340px;
+    grid-template-rows: 300px 340px;
+    gap: 25px;
+    max-width: 1200px;
+    width: 95%;
+    padding-bottom: 60px;
+    position: relative;
+    z-index: 1;
 }
 
 /* ========================================
@@ -93,95 +235,306 @@ body {
     cursor: pointer;
     border: 1px solid var(--border-subtle);
     transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 204, 0, 0.1) 50%, 
+        transparent 100%);
+    transition: left 0.6s ease;
+}
+
+.card:hover::before {
+    left: 100%;
 }
 
 .card:hover {
     transform: translateY(-10px) scale(1.02);
-    border-color: var(--primary-yellow); /* Hoverda sarı çerçeve */
-    box-shadow: 0 0 30px var(--glow-yellow);
+    border-color: var(--primary-red);
+    box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.5),
+        0 0 50px rgba(255, 204, 0, 0.2);
+}
+
+.card-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent);
+    transition: left 0.6s ease;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.card:hover .card-shine {
+    left: 150%;
 }
 
 .hover-border {
-    border: 2px solid var(--primary-yellow); /* Kenarlık sarı */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    border: 2px solid var(--primary-red);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.card:hover .hover-border {
+    opacity: 1;
 }
 
 /* ========================================
-   LOGO CARD & RINGS
+   LEFT COLUMN - LOGO CARD
    ======================================== */
+.left-column {
+    grid-row: span 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.logo-card {
+    background: transparent;
+    border: 2px solid rgba(255, 204, 0, 0.2);
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
 .logo-ring {
-    border: 3px solid rgba(255, 255, 255, 0.1); /* Halkalar artık kırmızı değil gri */
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border: 3px solid rgba(255, 204, 0, 0.2);
+    border-radius: 50%;
+    animation: rotate 20s linear infinite;
+    z-index: 1;
+}
+
+.ring-2 {
+    width: 250px;
+    height: 250px;
+    animation-duration: 15s;
+    animation-direction: reverse;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.main-dragon-logo {
+    width: 70%;
+    height: auto;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 20px 40px rgba(255, 204, 0, 0.4));
+    animation: logoFloat 4s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-15px) scale(1.05); }
 }
 
 .logo-flames {
-    display: none; /* Kırmızı alevler silindi */
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    z-index: 1;
+}
+
+.flame {
+    width: 15px;
+    height: 40px;
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 0, 0.6) 0%, /* Sarı Alev */
+        rgba(255, 204, 0, 0.4) 50%,
+        transparent 100%);
+    border-radius: 50% 50% 0 0;
+    animation: flicker 1.5s ease-in-out infinite;
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: 0.6; transform: scaleY(1); }
+    50% { opacity: 0.9; transform: scaleY(1.2); }
 }
 
 /* ========================================
    IP CONTAINER
    ======================================== */
+.ip-container {
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    padding: 16px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 2px solid #222;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+}
+
 .ip-container:hover {
-    border-color: var(--primary-yellow);
-    box-shadow: 0 15px 40px rgba(255, 255, 0, 0.1);
+    border-color: var(--primary-red);
+    background: linear-gradient(135deg, #2a220a 0%, #1a1505 100%);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(255, 204, 0, 0.3);
 }
 
 .ip-icon {
-    background: var(--primary-yellow); /* İkon arka planı sarı */
-    color: black;
+    width: 40px;
+    height: 40px;
+    background: var(--primary-red);
+    color: #000; /* İkon rengi siyah yapıldı sarı üstünde daha iyi durur */
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.ip-text {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--text-white);
+}
+
+.ip-copy-btn {
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.ip-container:hover .ip-copy-btn {
+    background: var(--primary-red);
+    color: #000;
 }
 
 /* ========================================
    STORE & STATS CARDS
    ======================================== */
 .card-icon {
-    background: rgba(255, 255, 255, 0.05); /* Arka plan hafif gri */
-    border: 2px solid var(--primary-yellow); /* Çerçeve sarı */
-    color: var(--primary-yellow);
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 204, 0, 0.2);
+    border: 2px solid var(--primary-red);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: var(--primary-red);
+    margin-bottom: 10px;
 }
 
 .card:hover .card-icon {
-    background: var(--primary-yellow);
-    color: black;
+    transform: rotate(10deg) scale(1.15);
+    box-shadow: 0 10px 30px var(--glow-red);
+    background: rgba(255, 204, 0, 0.3);
 }
 
-/* YAKINDA ETİKETİNİ SİLER */
 .card-badge {
-    display: none !important;
-}
-
-/* ========================================
-   SOCIAL MEDIA CARD
-   ======================================== */
-.social-box:hover {
-    border-color: var(--primary-yellow);
-    background: rgba(255, 255, 255, 0.03);
-}
-
-.social-arrow:hover, .card-title i {
-    color: var(--primary-yellow);
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    background: var(--primary-red);
+    color: black; /* Siyah yazı sarı rozet */
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 900;
+    z-index: 3;
+    animation: badgePulse 2s ease-in-out infinite;
 }
 
 /* ========================================
    JOIN CARD
    ======================================== */
-.join-header {
-    border-bottom: 2px solid var(--primary-yellow);
+.join-card {
+    background: linear-gradient(180deg, 
+        rgba(0, 0, 0, 0.95), 
+        rgba(10, 8, 0, 0.98)); /* Hafif sarımsı siyah */
+    padding: 30px;
+    min-height: 380px;
 }
 
-.join-header i, .step-number, .mc-font {
-    color: var(--primary-yellow); /* Adım numaraları ve yazılar sarı */
+.join-header {
+    border-bottom: 2px solid rgba(255, 204, 0, 0.2);
+}
+
+.join-header i {
+    color: var(--primary-red);
 }
 
 .step-number {
-    background: var(--primary-yellow);
-    color: black;
+    background: var(--primary-red);
+    color: #000;
+}
+
+.inline-ip {
+    border: 1px solid rgba(255, 204, 0, 0.3);
+}
+
+.mc-font {
+    color: var(--primary-red);
 }
 
 /* ========================================
    TOAST NOTIFICATION
    ======================================== */
-.toast-icon, .toast-progress {
-    background: var(--primary-yellow); /* Bildirimler sarı */
-}
 .toast {
-    box-shadow: 0 0 0 1px var(--primary-yellow);
+    box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(255, 204, 0, 0.5);
+}
+
+.toast-icon {
+    background: var(--primary-red);
+    color: #000;
+}
+
+.toast-progress {
+    background: var(--primary-red);
+}
+
+/* ========================================
+   ANIMATIONS & RESPONSIVE (Değişmedi sadece renk uyumu sağlandı)
+   ======================================== */
+@keyframes fadeInUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+    .online-status:hover { border-color: var(--primary-red); }
 }
