@@ -230,7 +230,7 @@ function App() {
                     <div className="step-number">1</div>
                     <div className="step-content">
                         <span className="step-title">1.12.2 Forge Kur</span>
-                        <span className="step-desc">Sadece 1.12.2 Forge sürümü desteklenir</span>
+                        <span className="step-desc">Sadece Forge desteklenir</span>
                     </div>
                 </div>
                 <div className="step">
