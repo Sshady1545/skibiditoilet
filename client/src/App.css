@@ -3,6 +3,9 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: #FFFF00; /* Arka planı parlak SARI yaptık */
+  color: #FF0000; /* Ana yazı rengini KIRMIZI yaptık */
+  min-height: 100vh; /* Tüm sayfayı kaplaması için */
 }
 
 .logo {
@@ -11,11 +14,15 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
+/* Mouse ile üzerine gelince çıkan parlamayı KIRMIZI yaptık */
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #FF0000);
 }
+
+/* React logosu üzerine gelince çıkan parlamayı KIRMIZI yaptık */
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em #FF0000);
 }
 
 @keyframes logo-spin {
@@ -35,8 +42,20 @@
 
 .card {
   padding: 2em;
+  background-color: #fdfd96; /* Kartların içini biraz daha açık sarı yaptık */
+  border: 2px solid #FF0000; /* Kartlara kırmızı çerçeve ekledik */
+  border-radius: 8px;
+  color: #FF0000;
 }
 
 .read-the-docs {
-  color: #888;
+  color: #cc0000; /* Alt metni koyu kırmızı yaptık */
+  font-weight: bold;
+}
+
+/* Linkleri belirgin olması için kırmızı ve altı çizili yapıyoruz */
+a {
+  color: #FF0000;
+  text-decoration: underline;
+  font-weight: bold;
 }
