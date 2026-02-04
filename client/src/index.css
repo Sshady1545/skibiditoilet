@@ -1,25 +1,12 @@
 @import "tailwindcss";
 
-/* Arka plana dokunmaz, sadece kırmızılıkları sarı yapar */
-body {
-  color: #FFFF00 !important; /* Tüm ana yazılar sarı */
-  margin: 0;
-  padding: 0;
+/* Kırmızı rozetleri ve arka planları sarıya zorla */
+.bg-red-600, .bg-red-500, [class*="red"] {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
 }
 
-/* Kırmızı butonları, çerçeveleri ve ikonları sarıya zorlar */
-a, button, .button, [class*="red"], [class*="red"] * {
-  color: #FFFF00 !important;
-  border-color: #FFFF00 !important;
-}
-
-/* Kırmızı arka planlı butonları/etiketleri sarı yapar */
-[class*="bg-red"] {
-  background-color: #FFFF00 !important;
-  color: #000000 !important; /* Sarı zemin üstüne siyah yazı daha iyi okunur */
-}
-
-/* Dragon logosunun altındaki parlamayı sarı yapar */
-#root, .App {
-  --glow-color: #FFFF00;
+/* Yakında yazılarını gizle */
+.badge-yakinda, .text-red-500 {
+    display: none !important; 
 }
