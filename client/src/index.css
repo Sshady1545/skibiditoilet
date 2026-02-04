@@ -1,32 +1,29 @@
 @import "tailwindcss";
 
-/* 1. TÜM KIRMIZI GÖLGELERİ VE PARLAMALARI SİLER */
-* {
-    box-shadow: none !important;
-    text-shadow: none !important;
-    -webkit-box-shadow: none !important;
+/* Kırmızı arka planlı olan tüm kutucukları beyaz/açık gri yap */
+.bg-red-500, .bg-red-600, .icon-container, .social-icon, .card-icon {
+  background-color: #f3f4f6 !important; /* Kırmızı gitti, yerine beyaz/gri geldi */
+  background-image: none !important;
+  color: #333 !important; /* İçindeki ikonlar koyu olsun ki gözüksün */
 }
 
-/* 2. TÜM KIRMIZI ARKA PLANLARI BEYAZImsı GRİ YAPAR */
-[class*="red"], [class*="flame"], .status-dot.bg-red-500 {
-    background-color: #e0e0e0 !important;
-    background-image: none !important;
+/* Kırmızı parlamaları (Glow) tamamen kapat */
+.logo-glow, .nav-glow, .logo-ring {
+  display: none !important;
 }
 
-/* 3. İKONLAR (Discord ve Youtube hariç her şey SARI) */
-i:not(.fa-youtube):not(.fa-discord):not(.fab), 
-svg:not([class*="youtube"]):not([class*="discord"]) {
-    color: #FFFF00 !important;
-    fill: #FFFF00 !important;
+/* Kart çerçeveleri sarı kalsın */
+.card {
+  border: 2px solid #FFFF00 !important;
+  background-color: #121212 !important; /* Kart içi siyah/koyu gri */
 }
 
-/* 4. KART ÇERÇEVELERİ SARI */
-.card, .social-card, .stats-card, .store-card {
-    border: 2px solid #FFFF00 !important;
-    background-color: #1a1a1a !important;
+/* "Yakında" yazısını sil */
+.card-badge, *:contains("YAKINDA") {
+  display: none !important;
 }
 
-/* 5. "YAKINDA" YAZISINI KESİN SİLME (DOM'da varsa) */
-.card-badge, *:contains("YAKINDA"), *:contains("Yakında") {
-    display: none !important;
+/* İkonlar (Discord ve YouTube hariç) Sarı */
+i:not(.fa-youtube):not(.fa-discord) {
+  color: #FFFF00 !important;
 }
