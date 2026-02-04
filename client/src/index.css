@@ -1,29 +1,19 @@
 @import "tailwindcss";
 
-/* Kırmızı arka planlı olan tüm kutucukları beyaz/açık gri yap */
-.bg-red-500, .bg-red-600, .icon-container, .social-icon, .card-icon {
-  background-color: #f3f4f6 !important; /* Kırmızı gitti, yerine beyaz/gri geldi */
-  background-image: none !important;
-  color: #333 !important; /* İçindeki ikonlar koyu olsun ki gözüksün */
+body {
+  background-color: #0a0a0a !important;
+  color: #ffffff !important;
 }
 
-/* Kırmızı parlamaları (Glow) tamamen kapat */
-.logo-glow, .nav-glow, .logo-ring {
-  display: none !important;
+/* Youtube ve Discord hariç ikonları sarı (veya hafif grimsi sarı) yapalım */
+i:not(.fa-youtube):not(.fa-discord), 
+svg:not([class*="youtube"]):not([class*="discord"]) {
+  color: #e6e600 !important; /* Hafif soft sarı */
+  fill: #e6e600 !important;
 }
 
-/* Kart çerçeveleri sarı kalsın */
-.card {
-  border: 2px solid #FFFF00 !important;
-  background-color: #121212 !important; /* Kart içi siyah/koyu gri */
-}
-
-/* "Yakında" yazısını sil */
-.card-badge, *:contains("YAKINDA") {
-  display: none !important;
-}
-
-/* İkonlar (Discord ve YouTube hariç) Sarı */
-i:not(.fa-youtube):not(.fa-discord) {
-  color: #FFFF00 !important;
+/* Kırmızı olan yerleri grimsi beyaz ve düşük opacity yapıyoruz */
+.bg-red-500, .bg-red-600, [class*="red"] {
+  background-color: rgba(200, 200, 200, 0.2) !important; /* Çok hafif gri */
+  color: #ffffff !important;
 }
