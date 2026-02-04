@@ -1,18 +1,32 @@
 @import "tailwindcss";
 
-body {
-  background-color: #0d0d0d !important;
-  color: #ffffff !important;
-  margin: 0;
-  padding: 0;
+/* 1. TÜM KIRMIZI GÖLGELERİ VE PARLAMALARI SİLER */
+* {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    -webkit-box-shadow: none !important;
 }
 
-/* İkonlar: YouTube ve Discord hariç hepsini sarı yap */
-svg:not([class*="youtube"]):not([class*="discord"]):not([id*="youtube"]):not([id*="discord"]) {
-  fill: #FFFF00 !important;
-  color: #FFFF00 !important;
+/* 2. TÜM KIRMIZI ARKA PLANLARI BEYAZImsı GRİ YAPAR */
+[class*="red"], [class*="flame"], .status-dot.bg-red-500 {
+    background-color: #e0e0e0 !important;
+    background-image: none !important;
 }
 
-i:not(.fa-youtube):not(.fa-discord) {
-  color: #FFFF00 !important;
+/* 3. İKONLAR (Discord ve Youtube hariç her şey SARI) */
+i:not(.fa-youtube):not(.fa-discord):not(.fab), 
+svg:not([class*="youtube"]):not([class*="discord"]) {
+    color: #FFFF00 !important;
+    fill: #FFFF00 !important;
+}
+
+/* 4. KART ÇERÇEVELERİ SARI */
+.card, .social-card, .stats-card, .store-card {
+    border: 2px solid #FFFF00 !important;
+    background-color: #1a1a1a !important;
+}
+
+/* 5. "YAKINDA" YAZISINI KESİN SİLME (DOM'da varsa) */
+.card-badge, *:contains("YAKINDA"), *:contains("Yakında") {
+    display: none !important;
 }
