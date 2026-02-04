@@ -10,7 +10,6 @@ interface ServerStatus {
   };
 }
 
-// Modal tipleri güncellendi
 type ModalType = 'none' | 'models' | 'mods';
 
 function App() {
@@ -173,7 +172,6 @@ function App() {
           </div>
         </div>
 
-        {/* MODLAR CARD */}
         <div className="card store-card" onClick={() => setActiveModal('mods')}>
             <div className="card-shine"></div>
             <div className="overlay">
@@ -207,7 +205,6 @@ function App() {
             <div className="hover-border"></div>
         </div>
 
-        {/* MODELLER CARD */}
         <div className="card stats-card" onClick={() => setActiveModal('models')}>
             <div className="card-shine"></div>
             <div className="overlay">
@@ -257,7 +254,6 @@ function App() {
         </div>
       </main>
 
-      {/* MODALS SECTION */}
       {activeModal !== 'none' && (
         <div className="fixed inset-0 z-[200] bg-black/90 flex items-center justify-center p-4 backdrop-blur-md" onClick={() => setActiveModal('none')}>
             <div className="bg-zinc-900 border-2 border-yellow-500/50 p-8 rounded-3xl max-w-lg w-full relative shadow-[0_0_50px_rgba(255,204,0,0.2)]" onClick={e => e.stopPropagation()}>
@@ -290,8 +286,14 @@ function App() {
                         <p className="text-gray-300 mb-6 leading-relaxed">
                             Sunucuya giriş yapabilmek için <span className="text-yellow-400 font-bold">1.12.2 Forge</span> kurulu olmalıdır.
                         </p>
-                        <a href="/downloads/mods.zip" download="mods.zip" className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 w-full">
-                            <i className="fa-solid fa-box-open"></i> Mod Paketini İndir (.zip)
+                        {/* MediaFire Linki Buraya Eklendi */}
+                        <a 
+                            href="https://www.mediafire.com/file/w7p9d2ca1zit0mw/mods.zip/file" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 w-full"
+                        >
+                            <i className="fa-solid fa-external-link"></i> Mod Paketini İndir (MediaFire)
                         </a>
                     </div>
                 )}
@@ -299,7 +301,6 @@ function App() {
         </div>
       )}
 
-      {/* TOAST */}
       <div id="toast" className={`toast ${toast.show ? '' : 'hidden'}`} style={{ display: toast.show ? 'flex' : 'none' }}>
         <div className="toast-icon" style={{backgroundColor: '#ffcc00', color: '#000'}}><i className="fa-solid fa-check"></i></div>
         <div className="toast-content">
@@ -313,7 +314,6 @@ function App() {
         © 2026 Dragon Studios | Skibidi Toilet Server. All rights reserved.
       </footer>
 
-      {/* SECRET MODAL */}
       {showSecret && (
         <div className="fixed inset-0 z-[300] bg-black/95 flex flex-col items-center justify-center p-4 backdrop-blur-sm" onClick={(e) => e.target === e.currentTarget && setShowSecret(false)}>
             <div className="bg-zinc-900 border border-yellow-500/50 p-8 rounded-2xl max-w-md w-full text-center relative shadow-[0_0_50px_rgba(255,204,0,0.1)]">
