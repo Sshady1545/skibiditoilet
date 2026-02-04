@@ -1,34 +1,43 @@
+#root {
+  background-color: #0d0d0d;
+}
+
+/* Kartlar ve Sarı Çerçeve */
 .card {
   padding: 2em;
   background-color: #1a1a1a !important; 
   border: 2px solid #FFFF00 !important; /* SARI ÇERÇEVE */
   border-radius: 12px;
-  box-shadow: none !important; /* Kırmızımsı gölgeleri öldür */
+  box-shadow: none !important; /* Kırmızı parlamaları kapat */
 }
 
-/* "Yakında" yazısını içeren her şeyi gizle */
-/* Eğer bir class'ı varsa buraya ekleyebilirsin, şu an metin üzerinden gizliyoruz */
-div:empty, *:contains("Yakında"), *:contains("yakında") {
+/* "Yakında" yazısını DOM'dan tamamen gizle */
+/* Not: Bu yöntem metin içeriğine göre gizleme yapar */
+*:contains("Yakında"), *:contains("yakında"), .yakinda-etiketi {
   display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
 }
 
-/* Alternatif olarak eğer Yakında yazısı belirli bir sınıfsa */
-.yakinda, .coming-soon {
-  display: none !important;
-}
-
-/* Buton ve Linkler */
+/* Butonlar ve Linkler */
 button {
   background-color: #FFFF00 !important;
   color: #000000 !important;
   font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
 }
 
-a {
+button:hover {
+  background-color: #e6e600 !important;
+}
+
+a:not([href*="discord"]):not([href*="youtube"]) {
   color: #FFFF00 !important;
 }
 
-/* Arka plandaki o kırmızı parlamaları (glow) durdurmak için */
+/* Sitedeki tüm kırmızı gölge ve parlamaları zorla kapat */
 * {
   text-shadow: none !important;
   box-shadow: none !important;

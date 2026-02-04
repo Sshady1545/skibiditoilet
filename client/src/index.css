@@ -1,26 +1,21 @@
 @import "tailwindcss";
 
 body {
-  background-color: #0a0a0a !important; /* Tam siyah/gri geçişi */
-  background-image: none !important;    /* Varsa arka plan resmini/gradienti siler */
+  background-color: #0d0d0d !important; /* Koyu gri/siyah arka plan */
+  background-image: none !important;    /* Kırmızı gölgeleri/efektleri siler */
   color: #ffffff !important;
   margin: 0;
   padding: 0;
   min-height: 100vh;
 }
 
-#root {
-  background: #0a0a0a !important;
-}
-
-/* Tüm ikonları sarı yap (YouTube olanları hariç tutmaya çalışacağız) */
-/* Eğer ikonlar SVG ise rengini sarıya zorlar */
-svg:not([class*="youtube"]):not([id*="youtube"]) {
+/* YOUTUBE VE DISCORD HARİÇ: Diğer tüm ikonları sarı yap */
+svg:not([class*="youtube"]):not([class*="discord"]):not([id*="youtube"]):not([id*="discord"]) {
   fill: #FFFF00 !important;
   color: #FFFF00 !important;
 }
 
-/* Lucide veya FontAwesome ikonları için */
-i:not(.fa-youtube), .lucide:not(.lucide-youtube) {
+/* Eğer font tabanlı ikon kullanıyorsan (FontAwesome vb.) */
+i:not(.fa-youtube):not(.fa-discord) {
   color: #FFFF00 !important;
 }
