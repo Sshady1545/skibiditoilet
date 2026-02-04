@@ -3,7 +3,9 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  color: #FFFF00 !important;
+  background-color: #FFFF00; 
+  color: #FF0000;
+  min-height: 100vh;
 }
 
 .logo {
@@ -13,23 +15,40 @@
   transition: filter 300ms;
 }
 
-/* Mouse ile üzerine gelince Sarı parlama efekti */
+/* Logoya kırmızı parlama efekti */
 .logo:hover {
-  filter: drop-shadow(0 0 2em #FFFF00);
-}
-
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #FFFF00);
+  filter: drop-shadow(0 0 2em #FF0000);
 }
 
 .card {
   padding: 2em;
-  border: 1px solid #FFFF00; /* Kart çerçevesi sarı */
+  background-color: #FFFACD !important; /* Kart içi çok açık sarı */
+  border: 3px solid #FF0000 !important; /* Kalın kırmızı çerçeve */
+  border-radius: 12px;
+  color: #FF0000 !important;
+  margin: 1rem 0;
+}
+
+/* Butonları Kırmızı yapıp yazısını Sarı yapıyoruz (Zıtlık için daha iyi okunur) */
+button {
   border-radius: 8px;
-  margin-top: 1rem;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #FF0000 !important; /* Kırmızı Buton */
+  color: #FFFF00 !important;           /* Sarı Yazı */
+  cursor: pointer;
+  transition: transform 0.25s;
+}
+
+button:hover {
+  transform: scale(1.1); /* Üzerine gelince biraz büyüsün */
+  background-color: #CC0000 !important; /* Daha koyu kırmızı */
 }
 
 .read-the-docs {
-  color: #FFFF00 !important;
-  opacity: 0.7; /* Biraz daha yumuşak bir sarı */
+  color: #CC0000;
+  font-weight: bold;
 }
