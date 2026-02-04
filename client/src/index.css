@@ -1,19 +1,39 @@
 @import "tailwindcss";
 
-body {
-  background-color: #0a0a0a !important;
-  color: #ffffff !important;
+/* 1. TÜM KIRMIZI CLASS'LARI GRİYE ÇEVİR */
+[class*="red"], [class*="flame"], .social-icon, .card-icon, .ip-icon {
+    background-color: rgba(255, 255, 255, 0.1) !important; /* Kırmızıyı şeffaf gri yapar */
+    background-image: none !important;
+    border-color: rgba(255, 255, 0, 0.5) !important; /* Sarımsı çerçeve */
 }
 
-/* Youtube ve Discord hariç ikonları sarı (veya hafif grimsi sarı) yapalım */
+/* 2. TÜM KIRMIZI RENK KODLARINI (HEX/RGB) SİSTEMDEN SİL */
+/* Eğer bir eleman kırmızıysa onu beyaza veya sarıya zorlar */
+* {
+    --tw-ring-color: transparent !important;
+    --tw-shadow: none !important;
+}
+
+/* 3. PARLAMALARI VE GÖLGELERİ ÖLDÜR */
+.logo-glow, .nav-glow, .logo-ring, [class*="glow"], [class*="ring"] {
+    display: none !important;
+    box-shadow: none !important;
+}
+
+/* 4. YAKINDA YAZISINI VE ETİKETİNİ YOK ET */
+.card-badge, .badge, [class*="yakinda"], [class*="coming"] {
+    display: none !important;
+}
+
+/* 5. İKONLARI SARI YAP (DC/YT hariç) */
 i:not(.fa-youtube):not(.fa-discord), 
 svg:not([class*="youtube"]):not([class*="discord"]) {
-  color: #e6e600 !important; /* Hafif soft sarı */
-  fill: #e6e600 !important;
+    color: #FFFF00 !important;
+    fill: #FFFF00 !important;
 }
 
-/* Kırmızı olan yerleri grimsi beyaz ve düşük opacity yapıyoruz */
-.bg-red-500, .bg-red-600, [class*="red"] {
-  background-color: rgba(200, 200, 200, 0.2) !important; /* Çok hafif gri */
-  color: #ffffff !important;
+/* 6. KARTLARI SİYAH YAP ÇERÇEVEYİ SARI */
+.card {
+    background-color: #0f0f0f !important;
+    border: 2px solid #FFFF00 !important;
 }
