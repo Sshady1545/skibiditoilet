@@ -39,7 +39,8 @@ function App() {
           position: absolute;
           width: ${size}px;
           height: ${size}px;
-          background: radial-gradient(circle, rgba(255, 26, 26, 0.8) 0%, transparent 70%);
+          /* KIRMIZI PARÇACIKLAR BEYAZ/GRI YAPILDI */
+          background: radial-gradient(circle, rgba(200, 200, 200, 0.6) 0%, transparent 70%);
           border-radius: 50%;
           left: ${startX}%;
           top: ${startY}%;
@@ -138,7 +139,8 @@ function App() {
           </div>
           <div className="nav-right">
             <div className="online-status" id="server-status">
-              <span className={`status-dot ${status?.online ? 'bg-green-500 shadow-[0_0_10px_#22c55e]' : 'bg-red-500'} block pulse`}></span>
+              {/* KIRMIZI DURUM IŞIĞI GRI YAPILDI */}
+              <span className={`status-dot ${status?.online ? 'bg-green-500 shadow-[0_0_10px_#22c55e]' : 'bg-gray-500'} block pulse`}></span>
               <span className="status-text">
                 {status?.online ? 'SUNUCU AKTİF' : 'BAĞLANIYOR...'}
               </span>
@@ -157,11 +159,6 @@ function App() {
             <div className="logo-ring"></div>
             <div className="logo-ring ring-2"></div>
             <img src="/images/logo.png" alt="DragonSMP" className="main-dragon-logo" />
-            <div className="logo-flames">
-                <div className="flame"></div>
-                <div className="flame"></div>
-                <div className="flame"></div>
-            </div>
           </div>
           
           <div className="ip-container" onClick={() => copyToClipboard(SERVER_IP)} id="copy-ip">
@@ -174,13 +171,13 @@ function App() {
           </div>
         </div>
 
-        <div className="card store-card" data-modal="store" onClick={() => showToast('STORE YAKINDA!', 'Bu özellik yakında aktif olacak')}>
+        <div className="card store-card" data-modal="store" onClick={() => showToast('STORE!', 'Yakında aktif olacak')}>
             <div className="card-shine"></div>
             <div className="overlay">
                 <div className="card-icon"><i className="fa-solid fa-shopping-cart"></i></div>
                 <h2>STORE</h2>
                 <p>Marketten alışveriş yapın</p>
-                <div className="card-badge">YAKINDA</div>
+                {/* YAKINDA YAZISI SİLİNDİ */}
             </div>
             <img src="/images/store.png" className="card-bg-img" />
             <div className="hover-border"></div>
@@ -208,13 +205,13 @@ function App() {
             <div className="hover-border"></div>
         </div>
 
-        <div className="card stats-card" data-modal="stats" onClick={() => showToast('İSTATİSTİKLER YAKINDA!', 'Bu özellik yakında aktif olacak')}>
+        <div className="card stats-card" data-modal="stats" onClick={() => showToast('STATS!', 'Yakında aktif olacak')}>
             <div className="card-shine"></div>
             <div className="overlay">
                 <div className="card-icon"><i className="fa-solid fa-chart-line"></i></div>
                 <h2>STATS</h2>
                 <p>Oyuncu istatistikleri</p>
-                <div className="card-badge">YAKINDA</div>
+                {/* YAKINDA YAZISI SİLİNDİ */}
             </div>
             <img src="/images/stats.jpg" className="card-bg-img" />
             <div className="hover-border"></div>
@@ -245,7 +242,6 @@ function App() {
                     <div className="step-number">3</div>
                     <div className="step-content w-full">
                         <span className="step-title">IP'yi Gir</span>
-                        {/* KESİN ÇÖZÜM: 'g' harfinin sığması için metin boyutunu küçülttük ve flex ayarı yaptık */}
                         <div className="inline-ip min-h-[40px] py-1 px-2 flex items-center justify-between gap-1 overflow-hidden" id="copy-ip-2" onClick={() => copyToClipboard(SERVER_IP)}>
                             <span className="mc-font text-[8px] sm:text-[10px] whitespace-nowrap">
                                 {SERVER_IP}
@@ -274,11 +270,11 @@ function App() {
 
       {showSecret && (
         <div className="fixed inset-0 z-[100] bg-black/95 flex flex-col items-center justify-center p-4 backdrop-blur-sm" onClick={(e) => e.target === e.currentTarget && setShowSecret(false)}>
-            <div className="bg-gray-900 border border-red-500/50 p-8 rounded-2xl max-w-md w-full text-center relative shadow-[0_0_50px_rgba(255,0,0,0.2)]">
+            <div className="bg-gray-900 border border-gray-500/50 p-8 rounded-2xl max-w-md w-full text-center relative shadow-[0_0_50px_rgba(255,255,255,0.1)]">
                 <button onClick={() => setShowSecret(false)} className="absolute top-4 right-4 text-gray-400 hover:text-white">
                     <i className="fa-solid fa-xmark text-2xl"></i>
                 </button>
-                <h2 className="text-4xl font-bold text-red-500 mb-8 tracking-widest animate-pulse">:)</h2>
+                <h2 className="text-4xl font-bold text-gray-500 mb-8 tracking-widest animate-pulse">:)</h2>
                 {!secretMessage ? (
                     <input 
                         type="text" value={secretInput}
