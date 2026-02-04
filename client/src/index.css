@@ -1,19 +1,18 @@
 @import "tailwindcss";
 
 body {
-  background-color: #0a0a0a !important;
+  background-color: #0d0d0d !important;
   color: #ffffff !important;
+  margin: 0;
+  padding: 0;
 }
 
-/* Youtube ve Discord hariç ikonları sarı (veya hafif grimsi sarı) yapalım */
-i:not(.fa-youtube):not(.fa-discord), 
-svg:not([class*="youtube"]):not([class*="discord"]) {
-  color: #e6e600 !important; /* Hafif soft sarı */
-  fill: #e6e600 !important;
+/* İkonlar: YouTube ve Discord hariç hepsini sarı yap */
+svg:not([class*="youtube"]):not([class*="discord"]):not([id*="youtube"]):not([id*="discord"]) {
+  fill: #FFFF00 !important;
+  color: #FFFF00 !important;
 }
 
-/* Kırmızı olan yerleri grimsi beyaz ve düşük opacity yapıyoruz */
-.bg-red-500, .bg-red-600, [class*="red"] {
-  background-color: rgba(200, 200, 200, 0.2) !important; /* Çok hafif gri */
-  color: #ffffff !important;
+i:not(.fa-youtube):not(.fa-discord) {
+  color: #FFFF00 !important;
 }
