@@ -13,16 +13,14 @@ interface ServerStatus {
 function App() {
   const [status, setStatus] = useState<ServerStatus | null>(null);
   const [toast, setToast] = useState<{ show: boolean; title: string; desc: string }>({ show: false, title: '', desc: '' });
-  const [activeModal, setActiveModal] = useState<'modlar' | 'modeller' | null>(null); // Yeni Modal State
+  const [activeModal, setActiveModal] = useState<'modlar' | 'modeller' | null>(null); 
   
-  const [keyBuffer, setKeyBuffer] = useState('');
-  const [showSecret, setShowSecret] = useState(false);
-  const [secretInput, setSecretInput] = useState('');
-  const [secretMessage, setSecretMessage] = useState('');
-
   const SERVER_IP = 'dragonsmp.shock.gg';
 
   useEffect(() => {
+    // Arka plan rengini gri yapmak için gövdeye stil ekliyoruz
+    document.body.style.backgroundColor = "#1a1a1a"; 
+
     const createParticles = () => {
       const container = document.getElementById('particles');
       if (!container) return;
@@ -40,7 +38,7 @@ function App() {
           position: absolute;
           width: ${size}px;
           height: ${size}px;
-          background: radial-gradient(circle, rgba(255, 255, 0, 0.8) 0%, transparent 70%); /* KIRMIZIDAN SARIYA ÇEVRİLDİ */
+          background: radial-gradient(circle, rgba(255, 204, 0, 0.8) 0%, transparent 70%); /* SARI PARTİKÜLLER */
           border-radius: 50%;
           left: ${startX}%;
           top: ${startY}%;
@@ -81,8 +79,6 @@ function App() {
   const copyToClipboard = (text: string, message: string = "IP ADRESİ KOPYALANDI!") => {
     navigator.clipboard.writeText(text).then(() => {
       showToast(message, "IP adresi panoya kopyalandı");
-    }).catch(() => {
-      showToast(message, "IP adresi panoya kopyalandı");
     });
   };
 
@@ -92,7 +88,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-[#1a1a1a] text-white font-sans overflow-x-hidden">
       <div className="particles-bg" id="particles"></div>
 
       <header className="top-nav">
@@ -109,105 +105,99 @@ function App() {
           <div className="nav-right">
             <div className="online-status" id="server-status">
               <span className={`status-dot ${status?.online ? 'bg-green-500 shadow-[0_0_10px_#22c55e]' : 'bg-red-500'} block pulse`}></span>
-              <span className="status-text">
+              <span className="status-text text-yellow-400">
                 {status?.online ? 'SUNUCU AKTİF' : 'BAĞLANIYOR...'}
               </span>
-              {status?.online && (
-                <span className="player-number">{status.players.online}</span>
-              )}
             </div>
           </div>
         </div>
       </header>
 
-      <main className="main-container">
-        <div className="left-column">
-          <div className="card logo-card">
-            <div className="logo-ring"></div>
-            <div className="logo-ring ring-2 border-yellow-400"></div> {/* SARI YAPILDI */}
-            <img src="/images/logo.png" alt="DragonSMP" className="main-dragon-logo" />
+      <main className="main-container grid grid-cols-1 md:grid-cols-3 gap-6 p-6 max-w-7xl mx-auto relative z-10">
+        <div className="left-column flex flex-col gap-6">
+          <div className="card logo-card bg-zinc-900/80 border border-yellow-400/20 p-8 rounded-3xl flex items-center justify-center relative overflow-hidden group">
+            <div className="logo-ring absolute w-48 h-48 border-2 border-yellow-400/30 rounded-full animate-spin-slow"></div>
+            <img src="/images/logo.png" alt="DragonSMP" className="w-32 h-32 relative z-10 group-hover:scale-110 transition-transform duration-500" />
           </div>
           
-          <div className="ip-container border-yellow-400" onClick={() => copyToClipboard(SERVER_IP)} id="copy-ip">
-            <div className="ip-icon text-yellow-400"><i className="fa-solid fa-server"></i></div>
-            <div className="ip-content">
-              <span className="ip-label">SERVER IP</span>
-              <span className="ip-text text-yellow-400">{SERVER_IP}</span>
+          <div className="ip-container bg-zinc-900/80 border border-yellow-400 p-4 rounded-2xl flex items-center gap-4 cursor-pointer hover:bg-zinc-800 transition-all" onClick={() => copyToClipboard(SERVER_IP)}>
+            <div className="ip-icon text-yellow-400 text-2xl"><i className="fa-solid fa-server"></i></div>
+            <div className="ip-content flex-1">
+              <span className="block text-[10px] text-gray-500 font-bold uppercase tracking-wider">SERVER IP</span>
+              <span className="block text-yellow-400 font-mono font-bold">{SERVER_IP}</span>
             </div>
-            <div className="ip-copy-btn"><i className="fa-regular fa-copy"></i></div>
+            <div className="ip-copy-btn text-gray-500"><i className="fa-regular fa-copy"></i></div>
           </div>
         </div>
 
-        {/* MODLAR KARTI */}
-        <div className="card store-card border-yellow-400" onClick={() => setActiveModal('modlar')}>
-            <div className="card-shine"></div>
-            <div className="overlay">
-                <div className="card-icon text-yellow-400"><i className="fa-solid fa-box-open"></i></div>
-                <h2 className="text-yellow-400">MODLAR</h2>
-                <p>1.12.2 Forge içindir</p>
-            </div>
-            <img src="/images/store.png" className="card-bg-img" />
-            <div className="hover-border border-yellow-400"></div>
-        </div>
-
-        <div className="card social-card">
-            <h3 className="card-title text-yellow-400"><i className="fa-solid fa-users"></i> TOPLULUK</h3>
-            <a href="https://youtube.com/@Sshady1545" target="_blank" className="social-box yt border-yellow-400/30">
-                <div className="social-icon text-red-600"><i className="fab fa-youtube"></i></div>
-                <div className="social-info">
-                    <strong className="social-number text-yellow-400">4,000+</strong>
-                    <span className="social-label">YouTube Abonesi</span>
+        {/* MODLAR VE MODELLER (Küçültülmüş tasarım) */}
+        <div className="middle-column flex flex-col gap-6">
+            <div className="card store-card h-48 bg-zinc-900/80 border border-yellow-400 overflow-hidden rounded-3xl relative cursor-pointer group" onClick={() => setActiveModal('modlar')}>
+                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all flex flex-col items-center justify-center z-10">
+                    <i className="fa-solid fa-box-open text-4xl text-yellow-400 mb-2"></i>
+                    <h2 className="text-xl font-bold text-yellow-400">MODLAR</h2>
+                    <p className="text-xs text-gray-300">1.12.2 Forge</p>
                 </div>
-            </a>
-            <a href="https://discord.gg/JUj7SHGdF6" target="_blank" className="social-box dc border-yellow-400/30">
-                <div className="social-icon text-blue-500"><i className="fab fa-discord"></i></div>
-                <div className="social-info">
-                    <strong className="social-number text-yellow-400">1,000+</strong>
-                    <span className="social-label">Discord Üyesi</span>
+                <img src="/images/store.png" className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:scale-110 transition-transform duration-700" />
+            </div>
+
+            <div className="card stats-card h-48 bg-zinc-900/80 border border-yellow-400 overflow-hidden rounded-3xl relative cursor-pointer group" onClick={() => setActiveModal('modeller')}>
+                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all flex flex-col items-center justify-center z-10">
+                    <i className="fa-solid fa-dragon text-4xl text-yellow-400 mb-2"></i>
+                    <h2 className="text-xl font-bold text-yellow-400">MODELLER</h2>
+                    <p className="text-xs text-gray-300">İndirmek için tıkla</p>
                 </div>
-            </a>
+                <img src="/images/stats.jpg" className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:scale-110 transition-transform duration-700" />
+            </div>
         </div>
 
-        {/* MODELLER KARTI */}
-        <div className="card stats-card border-yellow-400" onClick={() => setActiveModal('modeller')}>
-            <div className="card-shine"></div>
-            <div className="overlay">
-                <div className="card-icon text-yellow-400"><i className="fa-solid fa-dragon"></i></div>
-                <h2 className="text-yellow-400">MODELLER</h2>
-                <p>Chameleon ve Blockbuster</p>
+        <div className="right-column flex flex-col gap-6">
+            <div className="card social-card bg-zinc-900/80 border border-yellow-400/20 p-6 rounded-3xl">
+                <h3 className="text-yellow-400 font-bold mb-4 flex items-center gap-2"><i className="fa-solid fa-users"></i> TOPLULUK</h3>
+                <div className="flex flex-col gap-3">
+                    <a href="https://youtube.com/@Sshady1545" target="_blank" className="flex items-center gap-4 p-3 bg-black/40 rounded-xl border border-white/5 hover:border-red-600 transition-colors">
+                        <div className="text-red-600 text-2xl"><i className="fab fa-youtube"></i></div>
+                        <div className="flex flex-col">
+                            <strong className="text-yellow-400 text-lg">4,000+</strong>
+                            <span className="text-[10px] text-gray-500 uppercase">YouTube Abonesi</span>
+                        </div>
+                    </a>
+                    <a href="https://discord.gg/JUj7SHGdF6" target="_blank" className="flex items-center gap-4 p-3 bg-black/40 rounded-xl border border-white/5 hover:border-blue-500 transition-colors">
+                        <div className="text-blue-500 text-2xl"><i className="fab fa-discord"></i></div>
+                        <div className="flex flex-col">
+                            <strong className="text-yellow-400 text-lg">1,000+</strong>
+                            <span className="text-[10px] text-gray-500 uppercase">Discord Üyesi</span>
+                        </div>
+                    </a>
+                </div>
             </div>
-            <img src="/images/stats.jpg" className="card-bg-img" />
-            <div className="hover-border border-yellow-400"></div>
-        </div>
 
-        <div className="card join-card border-yellow-400">
-            <div className="join-header text-yellow-400">
-                <i className="fa-solid fa-gamepad"></i>
-                <h3>NASIL KATILIRIM?</h3>
-            </div>
-            <div className="join-steps">
-                {[
-                  { n: 1, t: "Minecraft'ı Aç", d: "Forge 1.12.2 Sürümü" },
-                  { n: 2, t: "Multiplayer'a Gir", d: "Ana menüden seç" },
-                  { n: 3, t: "IP'yi Gir", d: SERVER_IP }
-                ].map((step) => (
-                  <div className="step" key={step.n}>
-                    <div className="step-number bg-yellow-400 text-black">{step.n}</div>
-                    <div className="step-content">
-                        <span className="step-title text-yellow-400">{step.t}</span>
-                        <span className="step-desc">{step.d}</span>
-                    </div>
-                  </div>
-                ))}
+            <div className="card join-card bg-zinc-900/80 border border-yellow-400 p-6 rounded-3xl">
+                <h3 className="text-yellow-400 font-bold mb-4 flex items-center gap-2"><i className="fa-solid fa-gamepad"></i> NASIL KATILIRIM?</h3>
+                <div className="flex flex-col gap-4">
+                    {[
+                      { n: 1, t: "Minecraft'ı Aç", d: "Forge 1.12.2" },
+                      { n: 2, t: "Multiplayer'a Gir", d: "Ana Menü" },
+                      { n: 3, t: "IP'yi Gir", d: SERVER_IP }
+                    ].map((step) => (
+                      <div className="flex gap-4 items-start" key={step.n}>
+                        <div className="w-6 h-6 bg-yellow-400 text-black text-xs font-bold rounded flex items-center justify-center shrink-0">{step.n}</div>
+                        <div className="flex flex-col leading-tight">
+                            <span className="text-yellow-400 font-bold text-sm">{step.t}</span>
+                            <span className="text-[10px] text-gray-500">{step.d}</span>
+                        </div>
+                      </div>
+                    ))}
+                </div>
             </div>
         </div>
       </main>
 
-      {/* POP-UP MODAL EKRANI */}
+      {/* POP-UP MODAL - MODELLERDE 2 LİNK VAR */}
       {activeModal && (
         <div className="fixed inset-0 z-[200] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-zinc-900 border-2 border-yellow-400 p-8 rounded-3xl max-w-lg w-full relative shadow-[0_0_50px_rgba(255,255,0,0.2)]">
-            <button onClick={() => setActiveModal(null)} className="absolute top-4 right-4 text-yellow-400 hover:rotate-90 transition-transform">
+          <div className="bg-zinc-900 border-2 border-yellow-400 p-8 rounded-3xl max-w-lg w-full relative">
+            <button onClick={() => setActiveModal(null)} className="absolute top-4 right-4 text-yellow-400 hover:scale-110 transition-transform">
               <i className="fa-solid fa-xmark text-3xl"></i>
             </button>
             
@@ -215,35 +205,28 @@ function App() {
               <div className="text-center">
                 <i className="fa-solid fa-box-open text-6xl text-yellow-400 mb-4"></i>
                 <h2 className="text-3xl font-bold text-yellow-400 mb-2">MOD PAKETİ</h2>
-                <p className="text-gray-300 mb-6">Bu sunucu 1.12.2 Forge sürümü ile çalışmaktadır. Aşağıdaki butondan tüm gerekli modları indirebilirsiniz.</p>
-                <a href="BURAYA_MOD_LINKINI_YAZ" target="_blank" className="inline-block w-full py-4 bg-yellow-400 text-black font-bold rounded-xl hover:bg-yellow-500 transition-colors">
-                  MODLARI İNDİR (.ZIP)
-                </a>
+                <p className="text-gray-400 mb-6 text-sm">Gerekli tüm modları tek tıkla indirebilirsiniz.</p>
+                <a href="#" className="block py-4 bg-yellow-400 text-black font-bold rounded-xl hover:bg-yellow-500 transition-colors">MODLARI İNDİR (.ZIP)</a>
               </div>
             ) : (
               <div className="text-center">
                 <i className="fa-solid fa-dragon text-6xl text-yellow-400 mb-4"></i>
                 <h2 className="text-3xl font-bold text-yellow-400 mb-2">ÖZEL MODELLER</h2>
-                <p className="text-gray-300 mb-6">Chameleon ve Blockbuster modları ile uyumlu özel modellerimizi buradan indirebilirsiniz.</p>
-                <a href="BURAYA_MODEL_LINKINI_YAZ" target="_blank" className="inline-block w-full py-4 bg-yellow-400 text-black font-bold rounded-xl hover:bg-yellow-500 transition-colors">
-                  MODELLERİ İNDİR (.ZIP)
-                </a>
+                <div className="flex flex-col gap-4 mt-6">
+                    <a href="LINK_1" className="block py-4 bg-zinc-800 border border-yellow-400 text-yellow-400 font-bold rounded-xl hover:bg-yellow-400 hover:text-black transition-all">
+                       🔗 CHAMELEON MODELİNİ İNDİR
+                    </a>
+                    <a href="LINK_2" className="block py-4 bg-zinc-800 border border-yellow-400 text-yellow-400 font-bold rounded-xl hover:bg-yellow-400 hover:text-black transition-all">
+                       🔗 BLOCKBUSTER MODELİNİ İNDİR
+                    </a>
+                </div>
               </div>
             )}
           </div>
         </div>
       )}
 
-      {/* TOAST & FOOTER AYNI KALDI */}
-      <div id="toast" className={`toast ${toast.show ? '' : 'hidden'}`}>
-        <div className="toast-icon text-yellow-400"><i className="fa-solid fa-check-circle"></i></div>
-        <div className="toast-content">
-            <span className="toast-title text-yellow-400">{toast.title}</span>
-            <span className="toast-desc">{toast.desc}</span>
-        </div>
-      </div>
-      
-      <footer className="text-center py-6 text-yellow-400/50 text-xs relative z-10">
+      <footer className="text-center py-10 text-yellow-400/40 text-[10px] tracking-[4px] uppercase">
         © 2026 DragonSMP | Official. All rights reserved.
       </footer>
     </div>
