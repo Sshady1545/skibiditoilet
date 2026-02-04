@@ -10,7 +10,7 @@ interface ServerStatus {
   };
 }
 
-// Stats -> models, Store -> mods olarak güncellendi
+// Modal tipleri güncellendi
 type ModalType = 'none' | 'models' | 'mods';
 
 function App() {
@@ -108,7 +108,6 @@ function App() {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
-      // Ünlem ve bitişiklik sorunu burada çözüldü
       showToast("BAŞARILI", "IP adresi panoya kopyalandı");
     }).catch(() => {
       const textArea = document.createElement('textarea');
@@ -174,7 +173,7 @@ function App() {
           </div>
         </div>
 
-        {/* MODLAR CARD (Eski Store) */}
+        {/* MODLAR CARD */}
         <div className="card store-card" onClick={() => setActiveModal('mods')}>
             <div className="card-shine"></div>
             <div className="overlay">
@@ -208,7 +207,7 @@ function App() {
             <div className="hover-border"></div>
         </div>
 
-        {/* MODELLER CARD (Eski Stats) */}
+        {/* MODELLER CARD */}
         <div className="card stats-card" onClick={() => setActiveModal('models')}>
             <div className="card-shine"></div>
             <div className="overlay">
@@ -238,7 +237,7 @@ function App() {
                     <div className="step-number">2</div>
                     <div className="step-content">
                         <span className="step-title">Modları Yükle</span>
-                        <span className="step-desc">MODLAR kısmındaki mod paketini indirin</span>
+                        <span className="step-desc">MODLAR kısmındaki paketleri indirin</span>
                     </div>
                 </div>
                 <div className="step">
@@ -276,10 +275,10 @@ function App() {
                             <span className="text-red-400 font-bold underline">UYARI:</span> Chameleon ve Blockbuster modları olmadan bu modeller çalışmaz!
                         </p>
                         <div className="flex flex-col gap-3">
-                            <a href="/src/assets/models/blockbuster.zip" download className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2">
+                            <a href="/downloads/blockbuster.zip" download="blockbuster.zip" className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2">
                                 <i className="fa-solid fa-download"></i> Blockbuster.zip İndir
                             </a>
-                            <a href="/src/assets/models/chameleon.zip" download className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2">
+                            <a href="/downloads/chameleon.zip" download="chameleon.zip" className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2">
                                 <i className="fa-solid fa-download"></i> Chameleon.zip İndir
                             </a>
                         </div>
@@ -290,9 +289,8 @@ function App() {
                         <h2 className="text-2xl font-bold mb-4 font-['Orbitron'] text-yellow-500">MOD PAKETİ</h2>
                         <p className="text-gray-300 mb-6 leading-relaxed">
                             Sunucuya giriş yapabilmek için <span className="text-yellow-400 font-bold">1.12.2 Forge</span> kurulu olmalıdır.
-                            Aşağıdaki paket tüm gerekli modları içerir.
                         </p>
-                        <a href="/src/assets/mods/mods.zip" download className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 w-full">
+                        <a href="/downloads/mods.zip" download="mods.zip" className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 w-full">
                             <i className="fa-solid fa-box-open"></i> Mod Paketini İndir (.zip)
                         </a>
                     </div>
@@ -301,7 +299,7 @@ function App() {
         </div>
       )}
 
-      {/* TOAST - Geliştirilmiş Tasarım */}
+      {/* TOAST */}
       <div id="toast" className={`toast ${toast.show ? '' : 'hidden'}`} style={{ display: toast.show ? 'flex' : 'none' }}>
         <div className="toast-icon" style={{backgroundColor: '#ffcc00', color: '#000'}}><i className="fa-solid fa-check"></i></div>
         <div className="toast-content">
