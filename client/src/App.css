@@ -1,56 +1,44 @@
-/* 1. İKON KAPSAYICILARI (Kırmızı olan o yuvarlak/kare alanlar) */
-/* Sitedeki tüm kırmızı arka planları şeffaf griye çevirir */
-.card-icon, .social-icon, .ip-icon, .bg-red-500, .bg-red-600, .icon-container {
-    background-color: rgba(255, 255, 255, 0.1) !important; /* Opacity düşük beyaz/gri */
-    background-image: none !important;
-    border: 1px solid rgba(255, 255, 0, 0.3) !important; /* Çok hafif sarı kenarlık */
-    box-shadow: none !important;
+#root {
+  background-color: #0d0d0d;
 }
 
-/* 2. KARTLARIN GENEL YAPISI */
+/* Kartlar ve Sarı Çerçeve */
 .card {
-    padding: 2em;
-    background-color: #121212 !important; /* Siyah/Gri arka plan */
-    border: 2px solid #FFFF00 !important; /* PARLAK SARI ÇERÇEVE */
-    border-radius: 16px;
-    position: relative;
-    overflow: hidden;
+  padding: 2em;
+  background-color: #1a1a1a !important; 
+  border: 2px solid #FFFF00 !important; /* SARI ÇERÇEVE */
+  border-radius: 12px;
+  box-shadow: none !important; /* Kırmızı parlamaları kapat */
 }
 
-/* 3. YAKINDA YAZISINI VE ETİKETİNİ SİL */
-/* Hem class üzerinden hem de yazı içeriği üzerinden her şeyi uçurur */
-.card-badge, .badge, [class*="yakinda"], [class*="coming"] {
-    display: none !important;
-    visibility: hidden !important;
+/* "Yakında" yazısını DOM'dan tamamen gizle */
+/* Not: Bu yöntem metin içeriğine göre gizleme yapar */
+*:contains("Yakında"), *:contains("yakında"), .yakinda-etiketi {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
 }
 
-/* 4. BUTONLAR VE ETKİLEŞİM */
+/* Butonlar ve Linkler */
 button {
-    background-color: #FFFF00 !important;
-    color: #000000 !important;
-    font-weight: 800;
-    text-transform: uppercase;
-    border: none !important;
-    transition: all 0.3s ease;
+  background-color: #FFFF00 !important;
+  color: #000000 !important;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
 }
 
 button:hover {
-    background-color: #e6e600 !important;
-    transform: scale(1.05);
+  background-color: #e6e600 !important;
 }
 
-/* 5. LOGO VE DİĞER KIRMIZI EFEKTLERİ SIFIRLA */
-.logo-glow, .nav-glow, .logo-flames, .logo-ring {
-    display: none !important;
+a:not([href*="discord"]):not([href*="youtube"]) {
+  color: #FFFF00 !important;
 }
 
-/* 6. LİNKLER */
-a:not(.dc):not(.yt) {
-    color: #FFFF00 !important;
-}
-
-/* Genel temizlik: Kırmızı shadow (gölge) kalıntılarını siler */
+/* Sitedeki tüm kırmızı gölge ve parlamaları zorla kapat */
 * {
-    box-shadow: none !important;
-    text-shadow: none !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
 }
