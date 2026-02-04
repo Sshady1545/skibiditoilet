@@ -3,9 +3,15 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+<<<<<<< HEAD
   background-color: #FFFF00 !important; /* Ana Arka Plan: Parlak Sarı */
   color: #333333 !important;            /* Yazılar: Koyu Gri (Okunabilirlik için) */
   min-height: 100vh;
+=======
+  background-color: #FFFF00; /* Arka planı parlak SARI yaptık */
+  color: #FF0000; /* Ana yazı rengini KIRMIZI yaptık */
+  min-height: 100vh; /* Tüm sayfayı kaplaması için */
+>>>>>>> 5c240729d9d266db421ee0b435cae41308d4338b
 }
 
 .logo {
@@ -15,6 +21,7 @@
   transition: filter 300ms;
 }
 
+<<<<<<< HEAD
 /* Mouse üzerine gelince beyaz/altın parlasın */
 .logo:hover {
   filter: drop-shadow(0 0 2em #ffffff);
@@ -22,6 +29,16 @@
 
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #ffffff);
+=======
+/* Mouse ile üzerine gelince çıkan parlamayı KIRMIZI yaptık */
+.logo:hover {
+  filter: drop-shadow(0 0 2em #FF0000);
+}
+
+/* React logosu üzerine gelince çıkan parlamayı KIRMIZI yaptık */
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #FF0000);
+>>>>>>> 5c240729d9d266db421ee0b435cae41308d4338b
 }
 
 @keyframes logo-spin {
@@ -37,6 +54,7 @@
 
 .card {
   padding: 2em;
+<<<<<<< HEAD
   background-color: #FFFACD !important; /* Kartlar: Daha açık krem/sarı */
   border: 1px solid #FFD700;           /* Altın sarısı ince çerçeve */
   border-radius: 12px;
@@ -45,6 +63,24 @@
 
 .read-the-docs {
   color: #666600 !important; /* Alt metin: Koyu hardal sarısı */
+=======
+  background-color: #fdfd96; /* Kartların içini biraz daha açık sarı yaptık */
+  border: 2px solid #FF0000; /* Kartlara kırmızı çerçeve ekledik */
+  border-radius: 8px;
+  color: #FF0000;
+}
+
+.read-the-docs {
+  color: #cc0000; /* Alt metni koyu kırmızı yaptık */
+  font-weight: bold;
+}
+
+/* Linkleri belirgin olması için kırmızı ve altı çizili yapıyoruz */
+a {
+  color: #FF0000;
+  text-decoration: underline;
+  font-weight: bold;
+>>>>>>> 5c240729d9d266db421ee0b435cae41308d4338b
 }
 
 /* Butonları da sarı tonlarında yapalım */

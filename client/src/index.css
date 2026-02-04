@@ -1,6 +1,21 @@
 @import "tailwindcss";
 
-/* Custom styles from legacy can be imported or pasted here */
+/* Diğer tüm ayarları geçersiz kılıp sarı-kırmızı yapar */
 body {
-  @apply bg-gray-100 text-gray-900;
+  background-color: #FFFF00 !important; /* Parlak Sarı Arka Plan */
+  color: #FF0000 !important;            /* Parlak Kırmızı Yazı */
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Sayfadaki diğer kutuların gri kalmasını engeller */
+#root, .App {
+  background-color: #FFFF00 !important;
+}
+
+/* Linkleri ve butonları kırmızı yapar */
+a, button {
+  color: #FF0000 !important;
+  border-color: #FF0000 !important;
 }
