@@ -237,7 +237,7 @@ function App() {
                     <div className="step-number">2</div>
                     <div className="step-content">
                         <span className="step-title">Modları Yükle</span>
-                        <span className="step-desc">MODLAR kısmındaki paketleri indirin</span>
+                        <span className="step-desc">Paketleri indirin</span>
                     </div>
                 </div>
                 <div className="step">
