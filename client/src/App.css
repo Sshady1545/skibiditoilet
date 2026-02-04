@@ -3,8 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  /* background-color satırını sildim, arka plana dokunmuyoruz */
-  color: #FFFF00 !important; /* Yazıları sarı yapar */
+  color: #FFFF00 !important;
 }
 
 .logo {
@@ -14,7 +13,7 @@
   transition: filter 300ms;
 }
 
-/* Mouse üzerine gelince parlamayı sarı yapar */
+/* Mouse ile üzerine gelince Sarı parlama efekti */
 .logo:hover {
   filter: drop-shadow(0 0 2em #FFFF00);
 }
@@ -23,40 +22,14 @@
   filter: drop-shadow(0 0 2em #FFFF00);
 }
 
-@keyframes logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
 .card {
   padding: 2em;
-  border: 2px solid #FFFF00; /* Kart kenarlarını sarı yapar */
-  border-radius: 12px;
-  color: #FFFF00 !important;
+  border: 1px solid #FFFF00; /* Kart çerçevesi sarı */
+  border-radius: 8px;
+  margin-top: 1rem;
 }
 
 .read-the-docs {
-  color: #FFFF00 !important; /* Alt metni sarı yapar */
-  opacity: 0.8; /* Biraz daha şeffaf bir sarı */
-}
-
-/* Butonları sarı yapalım */
-button {
-  background-color: #FFFF00 !important;
-  color: #000000 !important; /* Sarı buton üstünde siyah yazı daha iyi okunur */
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: bold;
-}
-
-/* Linkleri sarı yapar */
-a {
   color: #FFFF00 !important;
+  opacity: 0.7; /* Biraz daha yumuşak bir sarı */
 }
