@@ -16,3 +16,30 @@ svg:not([class*="youtube"]):not([class*="discord"]):not([id*="youtube"]):not([id
 i:not(.fa-youtube):not(.fa-discord) {
   color: #FFFF00 !important;
 }
+
+/* TÜM SİSTEMDEKİ KIRMIZILARI SARIYA ZORLA */
+:root {
+    --primary-red: #FFFF00 !important;
+    --primary-red-dark: #cccc00 !important;
+    --glow-red: rgba(255, 255, 0, 0.3) !important;
+}
+
+/* İkonlar ve Class'lar için renk baskılama */
+i, .fa, .fas, .fab, [class*="red"], [class*="flame"] {
+    color: #FFFF00 !important;
+    fill: #FFFF00 !important;
+    border-color: #FFFF00 !important;
+    text-shadow: 0 0 10px rgba(255, 255, 0, 0.5) !important;
+}
+
+/* Arka plan kırmızılıklarını gri yap */
+[class*="bg-red"] {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    background-image: none !important;
+}
+
+/* Parlama efektlerini (glow) sarıya çevir */
+[class*="glow"], [class*="ring"] {
+    box-shadow: 0 0 15px rgba(255, 255, 0, 0.3) !important;
+    border-color: #FFFF00 !important;
+}
