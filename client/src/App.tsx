@@ -10,9 +10,12 @@ interface ServerStatus {
   };
 }
 
+type ModalType = 'none' | 'stats' | 'store';
+
 function App() {
   const [status, setStatus] = useState<ServerStatus | null>(null);
   const [toast, setToast] = useState<{ show: boolean; title: string; desc: string }>({ show: false, title: '', desc: '' });
+  const [activeModal, setActiveModal] = useState<ModalType>('none');
   
   const [keyBuffer, setKeyBuffer] = useState('');
   const [showSecret, setShowSecret] = useState(false);
@@ -39,8 +42,7 @@ function App() {
           position: absolute;
           width: ${size}px;
           height: ${size}px;
-          /* KIRMIZI PARÇACIKLAR BEYAZ/GRI YAPILDI */
-          background: radial-gradient(circle, rgba(200, 200, 200, 0.6) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(255, 204, 0, 0.4) 0%, transparent 70%);
           border-radius: 50%;
           left: ${startX}%;
           top: ${startY}%;
@@ -103,9 +105,9 @@ function App() {
     }
   };
 
-  const copyToClipboard = (text: string, message: string = "IP ADRESİ KOPYALANDI!") => {
+  const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
-      showToast(message, "IP adresi panoya kopyalandı");
+      showToast("BAŞARILI!", "IP adresi panoya kopyalandı");
     }).catch(() => {
       const textArea = document.createElement('textarea');
       textArea.value = text;
@@ -113,7 +115,7 @@ function App() {
       textArea.select();
       document.execCommand('copy');
       document.body.removeChild(textArea);
-      showToast(message, "IP adresi panoya kopyalandı");
+      showToast("BAŞARILI!", "IP adresi panoya kopyalandı");
     });
   };
 
@@ -134,13 +136,12 @@ function App() {
             </div>
             <div className="nav-title-group">
               <span className="nav-title">DRAGONSMP</span>
-              <span className="nav-subtitle">OFFICIAL SERVER</span>
+              <span className="nav-subtitle">SKIBIDI EDITION</span>
             </div>
           </div>
           <div className="nav-right">
             <div className="online-status" id="server-status">
-              {/* KIRMIZI DURUM IŞIĞI GRI YAPILDI */}
-              <span className={`status-dot ${status?.online ? 'bg-green-500 shadow-[0_0_10px_#22c55e]' : 'bg-gray-500'} block pulse`}></span>
+              <span className={`status-dot ${status?.online ? 'bg-yellow-400 shadow-[0_0_15px_#ffcc00]' : 'bg-gray-600'} block pulse`}></span>
               <span className="status-text">
                 {status?.online ? 'SUNUCU AKTİF' : 'BAĞLANIYOR...'}
               </span>
@@ -171,13 +172,13 @@ function App() {
           </div>
         </div>
 
-        <div className="card store-card" data-modal="store" onClick={() => showToast('STORE!', 'Yakında aktif olacak')}>
+        {/* STORE CARD */}
+        <div className="card store-card" onClick={() => setActiveModal('store')}>
             <div className="card-shine"></div>
             <div className="overlay">
                 <div className="card-icon"><i className="fa-solid fa-shopping-cart"></i></div>
                 <h2>STORE</h2>
-                <p>Marketten alışveriş yapın</p>
-                {/* YAKINDA YAZISI SİLİNDİ */}
+                <p>Gerekli modları indirin</p>
             </div>
             <img src="/images/store.png" className="card-bg-img" />
             <div className="hover-border"></div>
@@ -205,13 +206,13 @@ function App() {
             <div className="hover-border"></div>
         </div>
 
-        <div className="card stats-card" data-modal="stats" onClick={() => showToast('STATS!', 'Yakında aktif olacak')}>
+        {/* STATS CARD */}
+        <div className="card stats-card" onClick={() => setActiveModal('stats')}>
             <div className="card-shine"></div>
             <div className="overlay">
                 <div className="card-icon"><i className="fa-solid fa-chart-line"></i></div>
                 <h2>STATS</h2>
-                <p>Oyuncu istatistikleri</p>
-                {/* YAKINDA YAZISI SİLİNDİ */}
+                <p>Model paketlerini edinin</p>
             </div>
             <img src="/images/stats.jpg" className="card-bg-img" />
             <div className="hover-border"></div>
@@ -227,22 +228,22 @@ function App() {
                 <div className="step">
                     <div className="step-number">1</div>
                     <div className="step-content">
-                        <span className="step-title">Minecraft'ı Aç</span>
-                        <span className="step-desc">Bedrock/Java Edition 1.8-1.21.11</span>
+                        <span className="step-title">1.12.2 Forge Kur</span>
+                        <span className="step-desc">Sadece 1.12.2 Forge sürümü desteklenir</span>
                     </div>
                 </div>
                 <div className="step">
                     <div className="step-number">2</div>
                     <div className="step-content">
-                        <span className="step-title">Multiplayer'a Gir</span>
-                        <span className="step-desc">Ana menüden seç</span>
+                        <span className="step-title">Modları Yükle</span>
+                        <span className="step-desc">Store kısmındaki mod paketini indirin</span>
                     </div>
                 </div>
                 <div className="step">
                     <div className="step-number">3</div>
                     <div className="step-content w-full">
                         <span className="step-title">IP'yi Gir</span>
-                        <div className="inline-ip min-h-[40px] py-1 px-2 flex items-center justify-between gap-1 overflow-hidden" id="copy-ip-2" onClick={() => copyToClipboard(SERVER_IP)}>
+                        <div className="inline-ip min-h-[40px] py-1 px-2 flex items-center justify-between gap-1 overflow-hidden" onClick={() => copyToClipboard(SERVER_IP)}>
                             <span className="mc-font text-[8px] sm:text-[10px] whitespace-nowrap">
                                 {SERVER_IP}
                             </span>
@@ -255,26 +256,71 @@ function App() {
         </div>
       </main>
 
+      {/* MODALS SECTION */}
+      {activeModal !== 'none' && (
+        <div className="fixed inset-0 z-[200] bg-black/90 flex items-center justify-center p-4 backdrop-blur-md" onClick={() => setActiveModal('none')}>
+            <div className="bg-zinc-900 border-2 border-yellow-500/50 p-8 rounded-3xl max-w-lg w-full relative shadow-[0_0_50px_rgba(255,204,0,0.2)]" onClick={e => e.stopPropagation()}>
+                <button onClick={() => setActiveModal('none')} className="absolute top-4 right-4 text-gray-400 hover:text-yellow-500 transition-colors">
+                    <i className="fa-solid fa-circle-xmark text-3xl"></i>
+                </button>
+
+                {activeModal === 'stats' ? (
+                    <div className="text-center">
+                        <i className="fa-solid fa-cube text-5xl text-yellow-500 mb-4"></i>
+                        <h2 className="text-2xl font-bold mb-4 font-['Orbitron'] text-yellow-500">MODEL PAKETLERİ</h2>
+                        <p className="text-gray-300 mb-6 leading-relaxed">
+                            Bu modeller <span className="text-yellow-400 font-bold">1.12.2 Forge</span> sürümü için hazırlanmıştır. 
+                            <br/><br/>
+                            <span className="text-red-400 font-bold underline">UYARI:</span> Chameleon ve Blockbuster modları olmadan bu modeller çalışmaz!
+                        </p>
+                        <div className="flex flex-col gap-3">
+                            <a href="/src/assets/models/blockbuster.zip" download className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2">
+                                <i className="fa-solid fa-download"></i> Blockbuster.zip İndir
+                            </a>
+                            <a href="/src/assets/models/chameleon.zip" download className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2">
+                                <i className="fa-solid fa-download"></i> Chameleon.zip İndir
+                            </a>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="text-center">
+                        <i className="fa-solid fa-gears text-5xl text-yellow-500 mb-4"></i>
+                        <h2 className="text-2xl font-bold mb-4 font-['Orbitron'] text-yellow-500">MOD PAKETİ</h2>
+                        <p className="text-gray-300 mb-6 leading-relaxed">
+                            Sunucuya giriş yapabilmek için <span className="text-yellow-400 font-bold">1.12.2 Forge</span> kurulu olmalıdır.
+                            Aşağıdaki paket tüm gerekli modları içerir.
+                        </p>
+                        <a href="/src/assets/mods/mods.zip" download className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 w-full">
+                            <i className="fa-solid fa-box-open"></i> Mod Paketini İndir (.zip)
+                        </a>
+                    </div>
+                )}
+            </div>
+        </div>
+      )}
+
+      {/* TOAST */}
       <div id="toast" className={`toast ${toast.show ? '' : 'hidden'}`}>
-        <div className="toast-icon"><i className="fa-solid fa-check-circle"></i></div>
+        <div className="toast-icon" style={{backgroundColor: '#ffcc00', color: '#000'}}><i className="fa-solid fa-check-circle"></i></div>
         <div className="toast-content">
             <span className="toast-title">{toast.title}</span>
             <span className="toast-desc">{toast.desc}</span>
         </div>
-        <div className="toast-progress"></div>
+        <div className="toast-progress" style={{backgroundColor: '#ffcc00'}}></div>
       </div>
       
       <footer className="text-center py-6 text-gray-600 text-xs relative z-10">
-        © 2026 DragonSMP | Official. All rights reserved.
+        © 2026 DragonSMP | Skibidi Toilet Theme. All rights reserved.
       </footer>
 
+      {/* SECRET MODAL */}
       {showSecret && (
-        <div className="fixed inset-0 z-[100] bg-black/95 flex flex-col items-center justify-center p-4 backdrop-blur-sm" onClick={(e) => e.target === e.currentTarget && setShowSecret(false)}>
-            <div className="bg-gray-900 border border-gray-500/50 p-8 rounded-2xl max-w-md w-full text-center relative shadow-[0_0_50px_rgba(255,255,255,0.1)]">
+        <div className="fixed inset-0 z-[300] bg-black/95 flex flex-col items-center justify-center p-4 backdrop-blur-sm" onClick={(e) => e.target === e.currentTarget && setShowSecret(false)}>
+            <div className="bg-zinc-900 border border-yellow-500/50 p-8 rounded-2xl max-w-md w-full text-center relative shadow-[0_0_50px_rgba(255,204,0,0.1)]">
                 <button onClick={() => setShowSecret(false)} className="absolute top-4 right-4 text-gray-400 hover:text-white">
                     <i className="fa-solid fa-xmark text-2xl"></i>
                 </button>
-                <h2 className="text-4xl font-bold text-gray-500 mb-8 tracking-widest animate-pulse">:)</h2>
+                <h2 className="text-4xl font-bold text-yellow-500 mb-8 tracking-widest animate-pulse">:)</h2>
                 {!secretMessage ? (
                     <input 
                         type="text" value={secretInput}
@@ -282,7 +328,7 @@ function App() {
                             const val = e.target.value.toLowerCase();
                             setSecretInput(val);
                             if (['bay4lly', 'gofret', 'forget1221'].includes(val)) {
-                                setSecretMessage('bu site Bay4lly tarafından kodlanmıştır');
+                                setSecretMessage('Bu site Bay4lly tarafından kodlanmıştır');
                             } else if (val === 'shady1545') {
                                 setSecretMessage('Shady1545 YouTube Kanalına Gidiliyor...');
                                 setTimeout(() => window.open('https://youtube.com/@Sshady1545', '_blank'), 1000);
@@ -292,7 +338,7 @@ function App() {
                             }
                         }}
                         placeholder="..."
-                        className="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-3 text-white text-center font-mono"
+                        className="w-full bg-black/50 border border-yellow-900 rounded-lg px-4 py-3 text-white text-center font-mono focus:outline-none focus:border-yellow-500"
                         autoFocus
                     />
                 ) : (
