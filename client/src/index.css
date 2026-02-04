@@ -1,16 +1,26 @@
 @import "tailwindcss";
 
 body {
-  /* Beyazımsı Siyah / Çok koyu gri arka plan */
-  background-color: #121212 !important; 
-  /* Yazıları genel olarak beyaz yapalım ki okunsun */
-  color: #f8f9fa !important;
+  background-color: #0a0a0a !important; /* Tam siyah/gri geçişi */
+  background-image: none !important;    /* Varsa arka plan resmini/gradienti siler */
+  color: #ffffff !important;
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  font-family: 'Inter', sans-serif;
 }
 
-#root, .App {
-  background-color: #121212 !important;
+#root {
+  background: #0a0a0a !important;
+}
+
+/* Tüm ikonları sarı yap (YouTube olanları hariç tutmaya çalışacağız) */
+/* Eğer ikonlar SVG ise rengini sarıya zorlar */
+svg:not([class*="youtube"]):not([id*="youtube"]) {
+  fill: #FFFF00 !important;
+  color: #FFFF00 !important;
+}
+
+/* Lucide veya FontAwesome ikonları için */
+i:not(.fa-youtube), .lucide:not(.lucide-youtube) {
+  color: #FFFF00 !important;
 }

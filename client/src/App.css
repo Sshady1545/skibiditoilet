@@ -1,53 +1,35 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.logo:hover {
-  /* Logo parlaması sarı olsun */
-  filter: drop-shadow(0 0 2em #FFFF00);
-}
-
 .card {
   padding: 2em;
-  /* Kartın içi biraz daha açık gri (derinlik hissi için) */
-  background-color: #1e1e1e !important; 
-  /* İSTEDİĞİN SARI ÇERÇEVE */
-  border: 2px solid #FFFF00 !important; 
-  border-radius: 16px;
-  color: #ffffff !important;
-  margin: 1rem 0;
-  box-shadow: 0 4px 20px rgba(255, 255, 0, 0.1); /* Hafif sarımsı gölge */
+  background-color: #1a1a1a !important; 
+  border: 2px solid #FFFF00 !important; /* SARI ÇERÇEVE */
+  border-radius: 12px;
+  box-shadow: none !important; /* Kırmızımsı gölgeleri öldür */
 }
 
-/* Butonları da çerçeveyle uyumlu sarı yapalım */
+/* "Yakında" yazısını içeren her şeyi gizle */
+/* Eğer bir class'ı varsa buraya ekleyebilirsin, şu an metin üzerinden gizliyoruz */
+div:empty, *:contains("Yakında"), *:contains("yakında") {
+  display: none !important;
+}
+
+/* Alternatif olarak eğer Yakında yazısı belirli bir sınıfsa */
+.yakinda, .coming-soon {
+  display: none !important;
+}
+
+/* Buton ve Linkler */
 button {
-  background-color: #FFFF00 !important; 
-  color: #000000 !important; /* Sarı butonda siyah yazı daha iyi okunur */
-  border: none;
-  padding: 0.8em 1.5em;
+  background-color: #FFFF00 !important;
+  color: #000000 !important;
   font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  background-color: #e6e600 !important;
-  transform: translateY(-2px); /* Hafif yukarı kalkma efekti */
 }
 
 a {
-  color: #FFFF00 !important; /* Linkler de sarı olsun */
-  text-decoration: none;
+  color: #FFFF00 !important;
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
-.read-the-docs {
-  color: #888888; /* Alt açıklamalar sönük gri */
+/* Arka plandaki o kırmızı parlamaları (glow) durdurmak için */
+* {
+  text-shadow: none !important;
+  box-shadow: none !important;
 }
