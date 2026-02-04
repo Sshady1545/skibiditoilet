@@ -1,21 +1,21 @@
 @import "tailwindcss";
 
-/* Diğer tüm ayarları geçersiz kılıp sarı-kırmızı yapar */
+/* Arka plana dokunmadan sadece yazıları ve kenarlıkları sarı yapar */
 body {
-  background-color: #FFFF00 !important; /* Parlak Sarı Arka Plan */
-  color: #FF0000 !important;            /* Parlak Kırmızı Yazı */
+  color: #FFFF00 !important; /* Yazılar Sarı */
   margin: 0;
   padding: 0;
   min-height: 100vh;
 }
 
-/* Sayfadaki diğer kutuların gri kalmasını engeller */
-#root, .App {
-  background-color: #FFFF00 !important;
+/* Linkler ve butonlar sarı */
+a, button {
+  color: #FFFF00 !important;
+  border-color: #FFFF00 !important;
 }
 
-/* Linkleri ve butonları kırmızı yapar */
-a, button {
-  color: #FF0000 !important;
-  border-color: #FF0000 !important;
+/* Eğer butonların içi de sarı olsun istersen */
+button {
+  background-color: transparent; 
+  border: 2px solid #FFFF00;
 }
