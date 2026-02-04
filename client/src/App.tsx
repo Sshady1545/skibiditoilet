@@ -10,7 +10,8 @@ interface ServerStatus {
   };
 }
 
-type ModalType = 'none' | 'stats' | 'store';
+// Stats -> models, Store -> mods olarak güncellendi
+type ModalType = 'none' | 'models' | 'mods';
 
 function App() {
   const [status, setStatus] = useState<ServerStatus | null>(null);
@@ -107,7 +108,8 @@ function App() {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
-      showToast("BAŞARILI!", "IP adresi panoya kopyalandı");
+      // Ünlem ve bitişiklik sorunu burada çözüldü
+      showToast("BAŞARILI", "IP adresi panoya kopyalandı");
     }).catch(() => {
       const textArea = document.createElement('textarea');
       textArea.value = text;
@@ -115,7 +117,7 @@ function App() {
       textArea.select();
       document.execCommand('copy');
       document.body.removeChild(textArea);
-      showToast("BAŞARILI!", "IP adresi panoya kopyalandı");
+      showToast("BAŞARILI", "IP adresi panoya kopyalandı");
     });
   };
 
@@ -136,7 +138,7 @@ function App() {
             </div>
             <div className="nav-title-group">
               <span className="nav-title">DRAGONSMP</span>
-              <span className="nav-subtitle">SKIBIDI EDITION</span>
+              <span className="nav-subtitle uppercase tracking-widest">1.12.2 FORGE</span>
             </div>
           </div>
           <div className="nav-right">
@@ -172,12 +174,12 @@ function App() {
           </div>
         </div>
 
-        {/* STORE CARD */}
-        <div className="card store-card" onClick={() => setActiveModal('store')}>
+        {/* MODLAR CARD (Eski Store) */}
+        <div className="card store-card" onClick={() => setActiveModal('mods')}>
             <div className="card-shine"></div>
             <div className="overlay">
-                <div className="card-icon"><i className="fa-solid fa-shopping-cart"></i></div>
-                <h2>STORE</h2>
+                <div className="card-icon"><i className="fa-solid fa-box-open"></i></div>
+                <h2>MODLAR</h2>
                 <p>Gerekli modları indirin</p>
             </div>
             <img src="/images/store.png" className="card-bg-img" />
@@ -206,12 +208,12 @@ function App() {
             <div className="hover-border"></div>
         </div>
 
-        {/* STATS CARD */}
-        <div className="card stats-card" onClick={() => setActiveModal('stats')}>
+        {/* MODELLER CARD (Eski Stats) */}
+        <div className="card stats-card" onClick={() => setActiveModal('models')}>
             <div className="card-shine"></div>
             <div className="overlay">
-                <div className="card-icon"><i className="fa-solid fa-chart-line"></i></div>
-                <h2>STATS</h2>
+                <div className="card-icon"><i className="fa-solid fa-wand-magic-sparkles"></i></div>
+                <h2>MODELLER</h2>
                 <p>Model paketlerini edinin</p>
             </div>
             <img src="/images/stats.jpg" className="card-bg-img" />
@@ -236,7 +238,7 @@ function App() {
                     <div className="step-number">2</div>
                     <div className="step-content">
                         <span className="step-title">Modları Yükle</span>
-                        <span className="step-desc">Store kısmındaki mod paketini indirin</span>
+                        <span className="step-desc">MODLAR kısmındaki mod paketini indirin</span>
                     </div>
                 </div>
                 <div className="step">
@@ -264,10 +266,10 @@ function App() {
                     <i className="fa-solid fa-circle-xmark text-3xl"></i>
                 </button>
 
-                {activeModal === 'stats' ? (
+                {activeModal === 'models' ? (
                     <div className="text-center">
                         <i className="fa-solid fa-cube text-5xl text-yellow-500 mb-4"></i>
-                        <h2 className="text-2xl font-bold mb-4 font-['Orbitron'] text-yellow-500">MODEL PAKETLERİ</h2>
+                        <h2 className="text-2xl font-bold mb-4 font-['Orbitron'] text-yellow-500">MODELLER</h2>
                         <p className="text-gray-300 mb-6 leading-relaxed">
                             Bu modeller <span className="text-yellow-400 font-bold">1.12.2 Forge</span> sürümü için hazırlanmıştır. 
                             <br/><br/>
@@ -299,18 +301,18 @@ function App() {
         </div>
       )}
 
-      {/* TOAST */}
-      <div id="toast" className={`toast ${toast.show ? '' : 'hidden'}`}>
-        <div className="toast-icon" style={{backgroundColor: '#ffcc00', color: '#000'}}><i className="fa-solid fa-check-circle"></i></div>
+      {/* TOAST - Geliştirilmiş Tasarım */}
+      <div id="toast" className={`toast ${toast.show ? '' : 'hidden'}`} style={{ display: toast.show ? 'flex' : 'none' }}>
+        <div className="toast-icon" style={{backgroundColor: '#ffcc00', color: '#000'}}><i className="fa-solid fa-check"></i></div>
         <div className="toast-content">
-            <span className="toast-title">{toast.title}</span>
+            <span className="toast-title" style={{ fontWeight: '900' }}>{toast.title}</span>
             <span className="toast-desc">{toast.desc}</span>
         </div>
         <div className="toast-progress" style={{backgroundColor: '#ffcc00'}}></div>
       </div>
       
       <footer className="text-center py-6 text-gray-600 text-xs relative z-10">
-        © 2026 DragonSMP | Skibidi Toilet Theme. All rights reserved.
+        © 2026 DragonSMP | Modded Survival. All rights reserved.
       </footer>
 
       {/* SECRET MODAL */}
