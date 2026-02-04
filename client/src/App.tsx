@@ -136,7 +136,7 @@ function App() {
               <img src="/images/logo.png" alt="Logo" className="nav-logo-img" />
             </div>
             <div className="nav-title-group">
-              <span className="nav-title">DRAGONSMP</span>
+              <span className="nav-title">SKIBIDI TOILET</span>
               <span className="nav-subtitle uppercase tracking-widest">OFFICIAL SERVER</span>
             </div>
           </div>
@@ -310,7 +310,7 @@ function App() {
       </div>
       
       <footer className="text-center py-6 text-gray-600 text-xs relative z-10">
-        © 2026 DragonSMP | Modded Survival. All rights reserved.
+        © 2026 Dragon Studios | Skibidi Toilet Server. All rights reserved.
       </footer>
 
       {/* SECRET MODAL */}
