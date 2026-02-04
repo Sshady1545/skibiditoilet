@@ -1,21 +1,18 @@
 @import "tailwindcss";
 
 body {
-  background-color: #0d0d0d !important; /* Koyu gri/siyah arka plan */
-  background-image: none !important;    /* Kırmızı gölgeleri/efektleri siler */
+  background-color: #0d0d0d !important;
   color: #ffffff !important;
   margin: 0;
   padding: 0;
-  min-height: 100vh;
 }
 
-/* YOUTUBE VE DISCORD HARİÇ: Diğer tüm ikonları sarı yap */
+/* İkonlar: YouTube ve Discord hariç hepsini sarı yap */
 svg:not([class*="youtube"]):not([class*="discord"]):not([id*="youtube"]):not([id*="discord"]) {
   fill: #FFFF00 !important;
   color: #FFFF00 !important;
 }
 
-/* Eğer font tabanlı ikon kullanıyorsan (FontAwesome vb.) */
 i:not(.fa-youtube):not(.fa-discord) {
   color: #FFFF00 !important;
 }

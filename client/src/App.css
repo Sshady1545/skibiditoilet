@@ -1,44 +1,38 @@
-#root {
-  background-color: #0d0d0d;
+/* Kutucuğun (ikon kapsayıcısının) arkasındaki kırmızı alanı değiştirir */
+.icon-container, .bg-red-500, .bg-red-600 {
+  background-color: #f0f0f0 !important; /* Kırmızıyı beyazımsı gri yaptık */
+  background-image: none !important;
 }
 
-/* Kartlar ve Sarı Çerçeve */
+/* Kartlar ve Genel Yapı */
 .card {
   padding: 2em;
   background-color: #1a1a1a !important; 
-  border: 2px solid #FFFF00 !important; /* SARI ÇERÇEVE */
+  border: 2px solid #FFFF00 !important; /* Sarı Çerçeve */
   border-radius: 12px;
-  box-shadow: none !important; /* Kırmızı parlamaları kapat */
+  box-shadow: none !important;
 }
 
-/* "Yakında" yazısını DOM'dan tamamen gizle */
-/* Not: Bu yöntem metin içeriğine göre gizleme yapar */
-*:contains("Yakında"), *:contains("yakında"), .yakinda-etiketi {
+/* "Yakında" yazısını ve butonunu tamamen siler */
+[class*="yakinda"], [class*="coming-soon"], button:disabled, 
+*:contains("Yakında"), *:contains("yakında") {
   display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
 }
 
-/* Butonlar ve Linkler */
+/* Butonlar */
 button {
   background-color: #FFFF00 !important;
   color: #000000 !important;
   font-weight: bold;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
 }
 
-button:hover {
-  background-color: #e6e600 !important;
+/* Genel Kırmızı Temizliği (Her ihtimale karşı) */
+* {
+  outline-color: transparent !important;
+  border-color: initial;
 }
 
+/* Linkler */
 a:not([href*="discord"]):not([href*="youtube"]) {
   color: #FFFF00 !important;
-}
-
-/* Sitedeki tüm kırmızı gölge ve parlamaları zorla kapat */
-* {
-  text-shadow: none !important;
-  box-shadow: none !important;
 }
