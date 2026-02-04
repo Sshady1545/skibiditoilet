@@ -4,19 +4,15 @@ import './assets/css/all.min.css';
 
 interface ServerStatus {
   online: boolean;
-  players: {
-    online: number;
-    max: number;
-  };
+  players: { online: number; max: number; };
 }
 
-type ModalType = 'none' | 'stats' | 'store';
+type ModalType = 'none' | 'models' | 'mods';
 
 function App() {
   const [status, setStatus] = useState<ServerStatus | null>(null);
-  const [toast, setToast] = useState<{ show: boolean; title: string; desc: string }>({ show: false, title: '', desc: '' });
+  const [toast, setToast] = useState({ show: false, title: '', desc: '' });
   const [activeModal, setActiveModal] = useState<ModalType>('none');
-  
   const [keyBuffer, setKeyBuffer] = useState('');
   const [showSecret, setShowSecret] = useState(false);
   const [secretInput, setSecretInput] = useState('');
@@ -24,73 +20,51 @@ function App() {
 
   const SERVER_IP = 'dragonsmp.shock.gg';
 
+  // --- PARÇACIK EFEKTİ ---
   useEffect(() => {
     const createParticles = () => {
       const container = document.getElementById('particles');
       if (!container) return;
       container.innerHTML = '';
-      
       for (let i = 0; i < 30; i++) {
         const particle = document.createElement('div');
         const size = Math.random() * 3 + 1;
-        const startX = Math.random() * 100;
-        const startY = Math.random() * 100;
         const duration = Math.random() * 20 + 15;
-        const delay = Math.random() * 5;
-        
         particle.style.cssText = `
-          position: absolute;
-          width: ${size}px;
-          height: ${size}px;
+          position: absolute; width: ${size}px; height: ${size}px;
           background: radial-gradient(circle, rgba(255, 204, 0, 0.4) 0%, transparent 70%);
-          border-radius: 50%;
-          left: ${startX}%;
-          top: ${startY}%;
-          animation: float-particle-${i} ${duration}s ease-in-out ${delay}s infinite;
+          border-radius: 50%; left: ${Math.random() * 100}%; top: ${Math.random() * 100}%;
+          animation: float-particle-${i} ${duration}s ease-in-out infinite;
           pointer-events: none;
         `;
-
         const style = document.createElement('style');
-        style.textContent = `
-            @keyframes float-particle-${i} {
-                0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
-                10% { opacity: 0.8; }
-                50% { transform: translate(${(Math.random() - 0.5) * 100}px, ${(Math.random() - 0.5) * 100}px) scale(1.5); opacity: 1; }
-                90% { opacity: 0.8; }
-            }
-        `;
+        style.textContent = `@keyframes float-particle-${i} {
+          0%, 100% { transform: translate(0, 0); opacity: 0; }
+          50% { transform: translate(${(Math.random() - 0.5) * 100}px, ${(Math.random() - 0.5) * 100}px); opacity: 1; }
+        }`;
         document.head.appendChild(style);
         container.appendChild(particle);
       }
     };
-
     createParticles();
     checkServerStatus();
     const interval = setInterval(checkServerStatus, 30000);
     return () => clearInterval(interval);
   }, []);
 
+  // --- GİZLİ ANAHTAR SİSTEMİ ---
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (showSecret) {
-        if (e.key === 'Escape') {
-          setShowSecret(false);
-          setSecretInput('');
-          setSecretMessage('');
-        }
+        if (e.key === 'Escape') { setShowSecret(false); setSecretInput(''); setSecretMessage(''); }
         return;
       }
-
       setKeyBuffer((prev) => {
         const updated = (prev + e.key).slice(-6).toLowerCase();
-        if (updated === 'secret') {
-          setShowSecret(true);
-          setKeyBuffer('');
-        }
+        if (updated === 'secret') { setShowSecret(true); setKeyBuffer(''); }
         return updated;
       });
     };
-
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showSecret]);
@@ -100,255 +74,166 @@ function App() {
       const response = await fetch(`https://api.mcsrvstat.us/3/${SERVER_IP}`);
       const data = await response.json();
       setStatus(data);
-    } catch (error) {
-      console.error('Server status check failed', error);
-    }
+    } catch (error) { console.error(error); }
   };
 
   const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      showToast("BAŞARILI!", "IP adresi panoya kopyalandı");
-    }).catch(() => {
-      const textArea = document.createElement('textarea');
-      textArea.value = text;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textArea);
-      showToast("BAŞARILI!", "IP adresi panoya kopyalandı");
-    });
-  };
-
-  const showToast = (title: string, desc: string) => {
-    setToast({ show: true, title, desc });
+    navigator.clipboard.writeText(text);
+    setToast({ show: true, title: "BAŞARILI", desc: "IP adresi panoya kopyalandı" });
     setTimeout(() => setToast({ show: false, title: '', desc: '' }), 3000);
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
       <div className="particles-bg" id="particles"></div>
 
+      {/* --- NAVBAR --- */}
       <header className="top-nav">
         <div className="nav-content">
           <div className="nav-left">
-            <div className="logo-glow">
-              <img src="/images/logo.png" alt="Logo" className="nav-logo-img" />
-            </div>
+            <img src="/images/logo.png" alt="Logo" className="nav-logo-img" />
             <div className="nav-title-group">
-              <span className="nav-title">DRAGONSMP</span>
-              <span className="nav-subtitle">SKIBIDI EDITION</span>
+              <span className="nav-title tracking-tighter">DRAGONSMP</span>
+              <span className="nav-subtitle text-yellow-500 uppercase text-[10px] tracking-[3px]">Modded Survival</span>
             </div>
           </div>
           <div className="nav-right">
-            <div className="online-status" id="server-status">
-              <span className={`status-dot ${status?.online ? 'bg-yellow-400 shadow-[0_0_15px_#ffcc00]' : 'bg-gray-600'} block pulse`}></span>
-              <span className="status-text">
-                {status?.online ? 'SUNUCU AKTİF' : 'BAĞLANIYOR...'}
-              </span>
-              {status?.online && (
-                <span className="player-number">{status.players.online}</span>
-              )}
+            <div className="status-badge bg-white/5 border border-white/10 px-4 py-2 rounded-full flex items-center gap-3">
+              <span className={`w-2 h-2 rounded-full ${status?.online ? 'bg-yellow-500 shadow-[0_0_10px_#f59e0b]' : 'bg-red-500'} animate-pulse`}></span>
+              <span className="text-xs font-bold tracking-widest">{status?.online ? `${status.players.online} OYUNCU` : 'BAĞLANILIYOR...'}</span>
             </div>
           </div>
         </div>
-        <div className="nav-glow"></div>
       </header>
 
-      <main className="main-container">
-        <div className="left-column">
-          <div className="card logo-card">
-            <div className="logo-ring"></div>
-            <div className="logo-ring ring-2"></div>
-            <img src="/images/logo.png" alt="DragonSMP" className="main-dragon-logo" />
+      {/* --- ANA İÇERİK --- */}
+      <main className="max-w-7xl mx-auto px-6 pt-32 pb-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        {/* Logo & IP Card */}
+        <div className="card p-10 flex flex-col items-center justify-center text-center group transition-all duration-500 border border-white/5 bg-gradient-to-b from-white/5 to-transparent rounded-[2.5rem]" onClick={() => copyToClipboard(SERVER_IP)}>
+          <div className="relative mb-6">
+              <div className="absolute inset-0 bg-yellow-500/20 blur-3xl rounded-full group-hover:bg-yellow-500/40 transition-all"></div>
+              <img src="/images/logo.png" className="w-44 h-44 relative z-10 drop-shadow-2xl group-hover:scale-105 transition-transform" />
           </div>
-          
-          <div className="ip-container" onClick={() => copyToClipboard(SERVER_IP)} id="copy-ip">
-            <div className="ip-icon"><i className="fa-solid fa-server"></i></div>
-            <div className="ip-content">
-              <span className="ip-label">SERVER IP</span>
-              <span className="ip-text">{SERVER_IP}</span>
-            </div>
-            <div className="ip-copy-btn"><i className="fa-regular fa-copy"></i></div>
+          <div className="bg-black/40 border border-white/10 px-6 py-3 rounded-2xl group-hover:border-yellow-500/50 transition-all cursor-pointer">
+              <span className="block text-[10px] text-yellow-500 font-black tracking-[4px] mb-1">SUNUCU ADRESİ</span>
+              <code className="text-lg font-mono tracking-wider">{SERVER_IP}</code>
           </div>
         </div>
 
-        {/* STORE CARD */}
-        <div className="card store-card" onClick={() => setActiveModal('store')}>
-            <div className="card-shine"></div>
-            <div className="overlay">
-                <div className="card-icon"><i className="fa-solid fa-shopping-cart"></i></div>
-                <h2>STORE</h2>
-                <p>Gerekli modları indirin</p>
-            </div>
-            <img src="/images/store.png" className="card-bg-img" />
-            <div className="hover-border"></div>
+        {/* MODLAR (Store Yerine) */}
+        <div className="card group relative overflow-hidden rounded-[2.5rem] h-[400px] cursor-pointer" onClick={() => setActiveModal('mods')}>
+          <img src="/images/store.png" className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-110 transition-transform duration-700" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+          <div className="relative h-full p-8 flex flex-col justify-end z-20">
+              <div className="w-12 h-12 bg-yellow-500 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-yellow-500/20 text-black">
+                  <i className="fa-solid fa-box-open text-xl"></i>
+              </div>
+              <h2 className="text-5xl font-black italic tracking-tighter leading-none">MODLAR</h2>
+              <p className="text-gray-300 mt-2 font-medium">Gerekli paketleri indirin</p>
+          </div>
         </div>
 
-        <div className="card social-card">
-            <div className="card-shine"></div>
-            <h3 className="card-title"><i className="fa-solid fa-users"></i> TOPLULUK</h3>
-            <a href="https://youtube.com/@Sshady1545" target="_blank" className="social-box yt">
-                <div className="social-icon"><i className="fab fa-youtube"></i></div>
-                <div className="social-info">
-                    <strong className="social-number">4,000+</strong>
-                    <span className="social-label">YouTube Abonesi</span>
-                </div>
-                <div className="social-arrow"><i className="fa-solid fa-arrow-right"></i></div>
-            </a>
-            <a href="https://discord.gg/JUj7SHGdF6" target="_blank" className="social-box dc">
-                <div className="social-icon"><i className="fab fa-discord"></i></div>
-                <div className="social-info">
-                    <strong className="social-number">1,000+</strong>
-                    <span className="social-label">Discord Üyesi</span>
-                </div>
-                <div className="social-arrow"><i className="fa-solid fa-arrow-right"></i></div>
-            </a>
-            <div className="hover-border"></div>
-        </div>
-
-        {/* STATS CARD */}
-        <div className="card stats-card" onClick={() => setActiveModal('stats')}>
-            <div className="card-shine"></div>
-            <div className="overlay">
-                <div className="card-icon"><i className="fa-solid fa-chart-line"></i></div>
-                <h2>STATS</h2>
-                <p>Model paketlerini edinin</p>
-            </div>
-            <img src="/images/stats.jpg" className="card-bg-img" />
-            <div className="hover-border"></div>
-        </div>
-
-        <div className="card join-card">
-            <div className="card-shine"></div>
-            <div className="join-header">
-                <i className="fa-solid fa-gamepad"></i>
-                <h3>NASIL KATILIRIM?</h3>
-            </div>
-            <div className="join-steps">
-                <div className="step">
-                    <div className="step-number">1</div>
-                    <div className="step-content">
-                        <span className="step-title">1.12.2 Forge Kur</span>
-                        <span className="step-desc">Sadece 1.12.2 Forge sürümü desteklenir</span>
-                    </div>
-                </div>
-                <div className="step">
-                    <div className="step-number">2</div>
-                    <div className="step-content">
-                        <span className="step-title">Modları Yükle</span>
-                        <span className="step-desc">Store kısmındaki mod paketini indirin</span>
-                    </div>
-                </div>
-                <div className="step">
-                    <div className="step-number">3</div>
-                    <div className="step-content w-full">
-                        <span className="step-title">IP'yi Gir</span>
-                        <div className="inline-ip min-h-[40px] py-1 px-2 flex items-center justify-between gap-1 overflow-hidden" onClick={() => copyToClipboard(SERVER_IP)}>
-                            <span className="mc-font text-[8px] sm:text-[10px] whitespace-nowrap">
-                                {SERVER_IP}
-                            </span>
-                            <i className="fa-solid fa-copy text-[10px] flex-shrink-0"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="hover-border"></div>
+        {/* MODELLER (Stats Yerine) */}
+        <div className="card group relative overflow-hidden rounded-[2.5rem] h-[400px] cursor-pointer" onClick={() => setActiveModal('models')}>
+          <img src="/images/stats.jpg" className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-110 transition-transform duration-700" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+          <div className="relative h-full p-8 flex flex-col justify-end z-20">
+              <div className="w-12 h-12 bg-yellow-500 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-yellow-500/20 text-black">
+                  <i className="fa-solid fa-wand-magic-sparkles text-xl"></i>
+              </div>
+              <h2 className="text-5xl font-black italic tracking-tighter leading-none">MODELLER</h2>
+              <p className="text-gray-300 mt-2 font-medium">Özel karakter paketleri</p>
+          </div>
         </div>
       </main>
 
-      {/* MODALS SECTION */}
+      {/* --- MODERN MODALLAR --- */}
       {activeModal !== 'none' && (
-        <div className="fixed inset-0 z-[200] bg-black/90 flex items-center justify-center p-4 backdrop-blur-md" onClick={() => setActiveModal('none')}>
-            <div className="bg-zinc-900 border-2 border-yellow-500/50 p-8 rounded-3xl max-w-lg w-full relative shadow-[0_0_50px_rgba(255,204,0,0.2)]" onClick={e => e.stopPropagation()}>
-                <button onClick={() => setActiveModal('none')} className="absolute top-4 right-4 text-gray-400 hover:text-yellow-500 transition-colors">
-                    <i className="fa-solid fa-circle-xmark text-3xl"></i>
-                </button>
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center p-6 backdrop-blur-2xl bg-black/70 animate-in fade-in duration-300">
+            <div className="absolute inset-0" onClick={() => setActiveModal('none')}></div>
+            <div className="relative bg-[#0a0a0a] border border-white/10 w-full max-w-lg rounded-[3rem] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
+                <div className="p-10">
+                    <div className="flex justify-between items-start mb-8">
+                        <h2 className="text-4xl font-black italic tracking-tighter text-yellow-500 uppercase">
+                            {activeModal === 'models' ? 'Modeller' : 'Modlar'}
+                        </h2>
+                        <button onClick={() => setActiveModal('none')} className="text-white/20 hover:text-white transition-colors">
+                            <i className="fa-solid fa-circle-xmark text-3xl"></i>
+                        </button>
+                    </div>
+                    
+                    <p className="text-gray-400 mb-8 leading-relaxed">
+                        {activeModal === 'models' 
+                          ? "Karakter modellerinin çalışması için Chameleon ve Blockbuster modları zorunludur." 
+                          : "Sunucuya sorunsuz girmek için tüm modları indirip mods klasörüne atın."}
+                    </p>
 
-                {activeModal === 'stats' ? (
-                    <div className="text-center">
-                        <i className="fa-solid fa-cube text-5xl text-yellow-500 mb-4"></i>
-                        <h2 className="text-2xl font-bold mb-4 font-['Orbitron'] text-yellow-500">MODEL PAKETLERİ</h2>
-                        <p className="text-gray-300 mb-6 leading-relaxed">
-                            Bu modeller <span className="text-yellow-400 font-bold">1.12.2 Forge</span> sürümü için hazırlanmıştır. 
-                            <br/><br/>
-                            <span className="text-red-400 font-bold underline">UYARI:</span> Chameleon ve Blockbuster modları olmadan bu modeller çalışmaz!
-                        </p>
-                        <div className="flex flex-col gap-3">
-                            <a href="/src/assets/models/blockbuster.zip" download className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2">
-                                <i className="fa-solid fa-download"></i> Blockbuster.zip İndir
+                    <div className="grid gap-3">
+                        {activeModal === 'models' ? (
+                            <>
+                                <a href="/downloads/blockbuster.zip" download className="download-row">
+                                    <span>Blockbuster.zip</span> <i className="fa-solid fa-download"></i>
+                                </a>
+                                <a href="/downloads/chameleon.zip" download className="download-row">
+                                    <span>Chameleon.zip</span> <i className="fa-solid fa-download"></i>
+                                </a>
+                            </>
+                        ) : (
+                            <a href="/downloads/mods.zip" download className="download-row bg-yellow-500 !text-black border-none font-black py-5">
+                                MOD PAKETİNİ İNDİR (.ZIP) <i className="fa-solid fa-cloud-arrow-down"></i>
                             </a>
-                            <a href="/src/assets/models/chameleon.zip" download className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2">
-                                <i className="fa-solid fa-download"></i> Chameleon.zip İndir
-                            </a>
-                        </div>
+                        )}
                     </div>
-                ) : (
-                    <div className="text-center">
-                        <i className="fa-solid fa-gears text-5xl text-yellow-500 mb-4"></i>
-                        <h2 className="text-2xl font-bold mb-4 font-['Orbitron'] text-yellow-500">MOD PAKETİ</h2>
-                        <p className="text-gray-300 mb-6 leading-relaxed">
-                            Sunucuya giriş yapabilmek için <span className="text-yellow-400 font-bold">1.12.2 Forge</span> kurulu olmalıdır.
-                            Aşağıdaki paket tüm gerekli modları içerir.
-                        </p>
-                        <a href="/src/assets/mods/mods.zip" download className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 w-full">
-                            <i className="fa-solid fa-box-open"></i> Mod Paketini İndir (.zip)
-                        </a>
-                    </div>
-                )}
+                </div>
             </div>
         </div>
       )}
 
-      {/* TOAST */}
-      <div id="toast" className={`toast ${toast.show ? '' : 'hidden'}`}>
-        <div className="toast-icon" style={{backgroundColor: '#ffcc00', color: '#000'}}><i className="fa-solid fa-check-circle"></i></div>
-        <div className="toast-content">
-            <span className="toast-title">{toast.title}</span>
-            <span className="toast-desc">{toast.desc}</span>
+      {/* --- GÖRSELDEKİ GİBİ TOAST MESAJI --- */}
+      {toast.show && (
+        <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[2000] bg-[#111] border border-white/5 pl-2 pr-8 py-3 rounded-2xl flex items-center gap-5 shadow-2xl animate-in slide-in-from-bottom-10">
+            <div className="w-12 h-12 bg-yellow-500 rounded-xl flex items-center justify-center">
+                <i className="fa-solid fa-check text-black text-xl"></i>
+            </div>
+            <div>
+                <div className="text-lg font-black tracking-tight">{toast.title}</div>
+                <div className="text-white/50 text-xs font-medium uppercase tracking-widest">{toast.desc}</div>
+            </div>
         </div>
-        <div className="toast-progress" style={{backgroundColor: '#ffcc00'}}></div>
-      </div>
-      
-      <footer className="text-center py-6 text-gray-600 text-xs relative z-10">
-        © 2026 DragonSMP | Skibidi Toilet Theme. All rights reserved.
-      </footer>
+      )}
 
-      {/* SECRET MODAL */}
+      {/* --- SECRET MODAL --- */}
       {showSecret && (
-        <div className="fixed inset-0 z-[300] bg-black/95 flex flex-col items-center justify-center p-4 backdrop-blur-sm" onClick={(e) => e.target === e.currentTarget && setShowSecret(false)}>
-            <div className="bg-zinc-900 border border-yellow-500/50 p-8 rounded-2xl max-w-md w-full text-center relative shadow-[0_0_50px_rgba(255,204,0,0.1)]">
-                <button onClick={() => setShowSecret(false)} className="absolute top-4 right-4 text-gray-400 hover:text-white">
-                    <i className="fa-solid fa-xmark text-2xl"></i>
-                </button>
-                <h2 className="text-4xl font-bold text-yellow-500 mb-8 tracking-widest animate-pulse">:)</h2>
+        <div className="fixed inset-0 z-[3000] bg-black/95 flex flex-col items-center justify-center p-4 backdrop-blur-md">
+            <div className="bg-zinc-900 border border-yellow-500/20 p-10 rounded-[2rem] max-w-md w-full text-center relative shadow-2xl">
+                <button onClick={() => setShowSecret(false)} className="absolute top-6 right-6 text-white/20 hover:text-white"><i className="fa-solid fa-xmark text-2xl"></i></button>
+                <h2 className="text-4xl font-bold text-yellow-500 mb-8 animate-pulse italic">:)</h2>
                 {!secretMessage ? (
-                    <input 
-                        type="text" value={secretInput}
+                    <input type="text" value={secretInput} autoFocus
                         onChange={(e) => {
-                            const val = e.target.value.toLowerCase();
-                            setSecretInput(val);
-                            if (['bay4lly', 'gofret', 'forget1221'].includes(val)) {
-                                setSecretMessage('Bu site Bay4lly tarafından kodlanmıştır');
-                            } else if (val === 'shady1545') {
-                                setSecretMessage('Shady1545 YouTube Kanalına Gidiliyor...');
-                                setTimeout(() => window.open('https://youtube.com/@Sshady1545', '_blank'), 1000);
-                            } else if (val === 'robotic1545') {
-                                setSecretMessage('Robotic1545 YouTube Kanalına Gidiliyor...');
-                                setTimeout(() => window.open('https://youtube.com/@ofc-exelux', '_blank'), 1000);
-                            }
+                            const val = e.target.value.toLowerCase(); setSecretInput(val);
+                            if (['bay4lly', 'gofret', 'forget1221'].includes(val)) setSecretMessage('Bu site Bay4lly tarafından kodlanmıştır');
+                            else if (val === 'shady1545') { setSecretMessage('YouTube Kanalına Gidiliyor...'); setTimeout(() => window.open('https://youtube.com/@Sshady1545', '_blank'), 1000); }
                         }}
-                        placeholder="..."
-                        className="w-full bg-black/50 border border-yellow-900 rounded-lg px-4 py-3 text-white text-center font-mono focus:outline-none focus:border-yellow-500"
-                        autoFocus
+                        placeholder="..." className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-4 text-white text-center font-mono focus:border-yellow-500 outline-none"
                     />
-                ) : (
-                    <div className="animate-pulse">
-                        <p className="text-xl font-bold text-white font-mono">{secretMessage}</p>
-                    </div>
-                )}
+                ) : <p className="text-xl font-bold text-white font-mono animate-bounce">{secretMessage}</p>}
             </div>
         </div>
       )}
+
+      <style>{`
+        .download-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1.25rem 2rem; background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08); border-radius: 1.5rem;
+            text-decoration: none; color: white; font-weight: 700; transition: all 0.3s;
+        }
+        .download-row:hover { transform: translateX(5px); border-color: #f59e0b; background: rgba(255,255,255,0.05); }
+        .card { transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .card:hover { transform: translateY(-8px); }
+      `}</style>
     </div>
   );
 }
