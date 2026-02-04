@@ -137,7 +137,7 @@ function App() {
             </div>
             <div className="nav-title-group">
               <span className="nav-title">DRAGONSMP</span>
-              <span className="nav-subtitle uppercase tracking-widest">1.12.2 FORGE</span>
+              <span className="nav-subtitle uppercase tracking-widest">OFFICIAL SERVER</span>
             </div>
           </div>
           <div className="nav-right">
@@ -160,7 +160,7 @@ function App() {
           <div className="card logo-card">
             <div className="logo-ring"></div>
             <div className="logo-ring ring-2"></div>
-            <img src="/images/logo.png" alt="DragonSMP" className="main-dragon-logo" />
+            <img src="/images/logo.png" alt="SKIBIDI TOILET" className="main-dragon-logo" />
           </div>
           
           <div className="ip-container" onClick={() => copyToClipboard(SERVER_IP)} id="copy-ip">
