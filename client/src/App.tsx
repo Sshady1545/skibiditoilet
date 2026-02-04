@@ -13,13 +13,8 @@ interface ServerStatus {
 function App() {
   const [status, setStatus] = useState<ServerStatus | null>(null);
   const [toast, setToast] = useState<{ show: boolean; title: string; desc: string }>({ show: false, title: '', desc: '' });
-  const [activeModal, setActiveModal] = useState<'modlar' | 'modeller' | null>(null); // Yeni Modal State
+  const [activeModal, setActiveModal] = useState<'modlar' | 'modeller' | null>(null); 
   
-  const [keyBuffer, setKeyBuffer] = useState('');
-  const [showSecret, setShowSecret] = useState(false);
-  const [secretInput, setSecretInput] = useState('');
-  const [secretMessage, setSecretMessage] = useState('');
-
   const SERVER_IP = 'dragonsmp.shock.gg';
 
   useEffect(() => {
@@ -40,7 +35,7 @@ function App() {
           position: absolute;
           width: ${size}px;
           height: ${size}px;
-          background: radial-gradient(circle, rgba(255, 255, 0, 0.8) 0%, transparent 70%); /* KIRMIZIDAN SARIYA ÇEVRİLDİ */
+          background: radial-gradient(circle, rgba(255, 255, 0, 0.8) 0%, transparent 70%);
           border-radius: 50%;
           left: ${startX}%;
           top: ${startY}%;
@@ -92,7 +87,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-[#1a1a1a] text-white"> {/* ARKA PLAN GRİMSİ SİYAH YAPILDI */}
       <div className="particles-bg" id="particles"></div>
 
       <header className="top-nav">
@@ -109,11 +104,11 @@ function App() {
           <div className="nav-right">
             <div className="online-status" id="server-status">
               <span className={`status-dot ${status?.online ? 'bg-green-500 shadow-[0_0_10px_#22c55e]' : 'bg-red-500'} block pulse`}></span>
-              <span className="status-text">
+              <span className="status-text text-yellow-400"> {/* SARI YAPILDI */}
                 {status?.online ? 'SUNUCU AKTİF' : 'BAĞLANIYOR...'}
               </span>
               {status?.online && (
-                <span className="player-number">{status.players.online}</span>
+                <span className="player-number text-yellow-400">{status.players.online}</span>
               )}
             </div>
           </div>
@@ -122,9 +117,9 @@ function App() {
 
       <main className="main-container">
         <div className="left-column">
-          <div className="card logo-card">
-            <div className="logo-ring"></div>
-            <div className="logo-ring ring-2 border-yellow-400"></div> {/* SARI YAPILDI */}
+          <div className="card logo-card border-yellow-400/20">
+            <div className="logo-ring border-yellow-400/30"></div>
+            <div className="logo-ring ring-2 border-yellow-400"></div>
             <img src="/images/logo.png" alt="DragonSMP" className="main-dragon-logo" />
           </div>
           
@@ -138,7 +133,6 @@ function App() {
           </div>
         </div>
 
-        {/* MODLAR KARTI */}
         <div className="card store-card border-yellow-400" onClick={() => setActiveModal('modlar')}>
             <div className="card-shine"></div>
             <div className="overlay">
@@ -150,10 +144,10 @@ function App() {
             <div className="hover-border border-yellow-400"></div>
         </div>
 
-        <div className="card social-card">
+        <div className="card social-card border-yellow-400/20">
             <h3 className="card-title text-yellow-400"><i className="fa-solid fa-users"></i> TOPLULUK</h3>
             <a href="https://youtube.com/@Sshady1545" target="_blank" className="social-box yt border-yellow-400/30">
-                <div className="social-icon text-red-600"><i className="fab fa-youtube"></i></div>
+                <div className="social-icon text-red-600"><i className="fab fa-youtube"></i></div> {/* YOUTUBE DOKUNULMADI */}
                 <div className="social-info">
                     <strong className="social-number text-yellow-400">4,000+</strong>
                     <span className="social-label">YouTube Abonesi</span>
@@ -168,7 +162,6 @@ function App() {
             </a>
         </div>
 
-        {/* MODELLER KARTI */}
         <div className="card stats-card border-yellow-400" onClick={() => setActiveModal('modeller')}>
             <div className="card-shine"></div>
             <div className="overlay">
@@ -203,7 +196,6 @@ function App() {
         </div>
       </main>
 
-      {/* POP-UP MODAL EKRANI */}
       {activeModal && (
         <div className="fixed inset-0 z-[200] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
           <div className="bg-zinc-900 border-2 border-yellow-400 p-8 rounded-3xl max-w-lg w-full relative shadow-[0_0_50px_rgba(255,255,0,0.2)]">
@@ -215,8 +207,8 @@ function App() {
               <div className="text-center">
                 <i className="fa-solid fa-box-open text-6xl text-yellow-400 mb-4"></i>
                 <h2 className="text-3xl font-bold text-yellow-400 mb-2">MOD PAKETİ</h2>
-                <p className="text-gray-300 mb-6">Bu sunucu 1.12.2 Forge sürümü ile çalışmaktadır. Aşağıdaki butondan tüm gerekli modları indirebilirsiniz.</p>
-                <a href="BURAYA_MOD_LINKINI_YAZ" target="_blank" className="inline-block w-full py-4 bg-yellow-400 text-black font-bold rounded-xl hover:bg-yellow-500 transition-colors">
+                <p className="text-gray-300 mb-6 text-sm">Bu sunucu 1.12.2 Forge sürümü ile çalışmaktadır.</p>
+                <a href="LINK_BURAYA" target="_blank" className="inline-block w-full py-4 bg-yellow-400 text-black font-bold rounded-xl hover:bg-yellow-500 transition-colors">
                   MODLARI İNDİR (.ZIP)
                 </a>
               </div>
@@ -224,17 +216,21 @@ function App() {
               <div className="text-center">
                 <i className="fa-solid fa-dragon text-6xl text-yellow-400 mb-4"></i>
                 <h2 className="text-3xl font-bold text-yellow-400 mb-2">ÖZEL MODELLER</h2>
-                <p className="text-gray-300 mb-6">Chameleon ve Blockbuster modları ile uyumlu özel modellerimizi buradan indirebilirsiniz.</p>
-                <a href="BURAYA_MODEL_LINKINI_YAZ" target="_blank" className="inline-block w-full py-4 bg-yellow-400 text-black font-bold rounded-xl hover:bg-yellow-500 transition-colors">
-                  MODELLERİ İNDİR (.ZIP)
-                </a>
+                <p className="text-gray-300 mb-6 text-sm">Uyumlu modelleri aşağıdan indirebilirsiniz.</p>
+                <div className="grid grid-cols-1 gap-3"> {/* 2 LİNK ALACAK ŞEKİLDE DÜZENLENDİ */}
+                    <a href="LINK_1" target="_blank" className="py-3 bg-zinc-800 border border-yellow-400 text-yellow-400 font-bold rounded-xl hover:bg-yellow-400 hover:text-black transition-all">
+                      CHAMELEON MODELİ
+                    </a>
+                    <a href="LINK_2" target="_blank" className="py-3 bg-zinc-800 border border-yellow-400 text-yellow-400 font-bold rounded-xl hover:bg-yellow-400 hover:text-black transition-all">
+                      BLOCKBUSTER MODELİ
+                    </a>
+                </div>
               </div>
             )}
           </div>
         </div>
       )}
 
-      {/* TOAST & FOOTER AYNI KALDI */}
       <div id="toast" className={`toast ${toast.show ? '' : 'hidden'}`}>
         <div className="toast-icon text-yellow-400"><i className="fa-solid fa-check-circle"></i></div>
         <div className="toast-content">
