@@ -1,31 +1,19 @@
-/* 1. GÖRSELDEKİ O ALT KIRMIZI ÇERÇEVEYİ SARI YAPAR */
-.card, [class*="card"], .social-box, .ip-container {
-    border: 2px solid #FFFF00 !important; /* Ana çerçeve sarı */
-    outline: none !important; /* Dıştaki olası kırmızı çizgiyi siler */
-    box-shadow: 0 0 15px rgba(255, 255, 0, 0.2) !important; /* Kırmızı parlamayı sarıya çevirir */
+@import "tailwindcss";
+
+body {
+  background-color: #0a0a0a !important;
+  color: #ffffff !important;
 }
 
-/* 2. İKON KUTUCUĞUNUN (STATS/STORE) ETRAFINDAKİ KIRMIZIYI SİLER */
-.card-icon, .social-icon, .ip-icon {
-    border: 1px solid rgba(255, 255, 0, 0.5) !important;
-    background-color: rgba(255, 255, 255, 0.1) !important; /* İçini şeffaf gri yapar */
-    box-shadow: none !important;
+/* Youtube ve Discord hariç ikonları sarı (veya hafif grimsi sarı) yapalım */
+i:not(.fa-youtube):not(.fa-discord), 
+svg:not([class*="youtube"]):not([class*="discord"]) {
+  color: #e6e600 !important; /* Hafif soft sarı */
+  fill: #e6e600 !important;
 }
 
-/* 3. STORE GÖRSELİNDEKİ O ÇİFT RENKLİ KENARLIĞI DÜZELTİR */
-.card::before, .card::after, .hover-border {
-    border-color: #FFFF00 !important;
-    background: transparent !important;
-}
-
-/* 4. PARLAKLIĞI (GLOW) KIRMIZIDAN SARIYA ÇEVİR */
-[class*="glow"], [class*="ring"], .logo-ring {
-    border-color: #FFFF00 !important;
-    box-shadow: 0 0 20px rgba(255, 255, 0, 0.3) !important;
-}
-
-/* 5. EĞER HALA KIRMIZI GÖRÜNEN BİR YER VARSA ŞEFFAFLAŞTIR */
-* {
-    --tw-ring-color: #FFFF00 !important; /* Tailwind ringlerini sarı yapar */
-    --tw-shadow-color: transparent !important;
+/* Kırmızı olan yerleri grimsi beyaz ve düşük opacity yapıyoruz */
+.bg-red-500, .bg-red-600, [class*="red"] {
+  background-color: rgba(200, 200, 200, 0.2) !important; /* Çok hafif gri */
+  color: #ffffff !important;
 }
