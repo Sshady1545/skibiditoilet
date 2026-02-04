@@ -23,7 +23,7 @@ function App() {
   const [secretInput, setSecretInput] = useState('');
   const [secretMessage, setSecretMessage] = useState('');
 
-  const SERVER_IP = 'skibiditoilet.shock.gg';
+  const SERVER_IP = 'skibiditoilet.shock.gg:25568';
 
   useEffect(() => {
     const createParticles = () => {
